@@ -23,12 +23,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <!--<Button-->
+                <!--android:id="@+id/dice1_button"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:background="@mipmap/dice1"-->
+                <!--/>-->
+            <ImageButton
                 android:id="@+id/dice1_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:drawableStart="@mipmap/dice1"
-                android:background="@android:color/transparent"
+                android:background="@mipmap/dice1"
+
                 />
 
             <Button
@@ -67,9 +73,33 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@mipmap/dice6" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp"
+                android:text="@string/roll_button"
+                android:textSize="30sp"
+                />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_button"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

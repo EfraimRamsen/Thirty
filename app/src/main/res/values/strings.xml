@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Thirty</string>
+    <string name="roll_button">Roll!</string>
+    <string name="confirm_button">Confirm choices</string>
 </resources>
