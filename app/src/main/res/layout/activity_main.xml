@@ -6,13 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/dice1_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:drawableStart="@mipmap/dice1"
+                android:background="@android:color/transparent"
+                />
+
+            <Button
+                android:id="@+id/dice2_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@mipmap/dice2" />
+
+            <Button
+                android:id="@+id/dice3_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@mipmap/dice3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/dice4_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@mipmap/dice4" />
+
+            <Button
+                android:id="@+id/dice5_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@mipmap/dice5" />
+
+            <Button
+                android:id="@+id/dice6_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@mipmap/dice6" />
+
+
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
