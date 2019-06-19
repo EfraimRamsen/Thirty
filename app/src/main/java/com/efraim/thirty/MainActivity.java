@@ -1,7 +1,5 @@
 package com.efraim.thirty;
 
-import android.content.res.ColorStateList;
-import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,21 +8,22 @@ import android.widget.ImageButton;
 
 import java.util.Random;
 
-import static com.efraim.thirty.R.color.colorPrimaryDark;
-
 public class MainActivity extends AppCompatActivity {
 
 	private ImageButton mDice1Button, mDice2Button, mDice3Button, mDice4Button, mDice5Button, mDice6Button;
 	private Button mRollButton;
 	private Button mConfirmButton;
-
+	private Dice[] mDiceArray;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-//		mDice1Button = findViewById(R.id.dice1_button);
+		for(int i = 0; i < 6; i++){
+			mDiceArray[i] = new Dice(i+1,1);
+		}
+
 		mConfirmButton = findViewById(R.id.confirm_button);
 		mConfirmButton.setActivated(false);
 
@@ -35,8 +34,18 @@ public class MainActivity extends AppCompatActivity {
 				rollAllDice();
 				mConfirmButton.setActivated(true);
 				mConfirmButton.setTextColor(getResources().getColor(R.color.colorAccent));
+				mRollButton.setActivated(false);
+				mRollButton.setTextColor(getResources().getColor(R.color.grey_text));
 			}
 		});
+
+		mConfirmButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+
 	}
 
 	/**
