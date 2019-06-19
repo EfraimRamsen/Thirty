@@ -27,6 +27,7 @@
                 android:text="@string/welcome"
                 android:textAlignment="center"
                 android:textSize="18sp"
+                android:textColor="@color/pink_text"
                 />
 
         </LinearLayout>
@@ -98,6 +99,7 @@
                 android:layout_margin="20sp"
                 android:text="@string/roll_button"
                 android:textSize="30sp"
+                android:textColor="@color/colorAccent"
                 />
 
         </LinearLayout>
@@ -111,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/confirm_button"
                 android:textSize="16sp"
+                android:textColor="@color/grey_text"
                 />
 
         </LinearLayout>

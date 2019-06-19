@@ -1,5 +1,7 @@
 package com.efraim.thirty;
 
+import android.content.res.ColorStateList;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.Random;
+
+import static com.efraim.thirty.R.color.colorPrimaryDark;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,12 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
 //		mDice1Button = findViewById(R.id.dice1_button);
 		mConfirmButton = findViewById(R.id.confirm_button);
+		mConfirmButton.setActivated(false);
 
 		mRollButton = findViewById(R.id.roll_button);
 		mRollButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				rollAllDice();
+				mConfirmButton.setActivated(true);
+				mConfirmButton.setTextColor(getResources().getColor(R.color.colorAccent));
 			}
 		});
 	}
