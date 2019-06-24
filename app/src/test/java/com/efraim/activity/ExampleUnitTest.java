@@ -1,4 +1,4 @@
-package com.efraim.thirty;
+package com.efraim.activity;
 
 import org.junit.Test;
 

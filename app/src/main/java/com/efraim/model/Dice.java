@@ -1,6 +1,6 @@
-package com.efraim.thirty;
+package com.efraim.model;
 
-import java.util.Random;
+import com.efraim.activity.R;
 
 public class Dice {
 
@@ -106,18 +106,6 @@ public class Dice {
 		return imageResId;
 	}
 
-	/**
-	 * Create a random number for a D6 dice.
-	 * @return int 1-6
-	 */
-	public int randomD6(){
-		Random r = new Random();
-		int low = 1;
-		int high = 7;
-		int result = r.nextInt(high-low) + low;
-
-		return result;
-	}
 
 	public int getImageResId() {
 		return mImageResId;
