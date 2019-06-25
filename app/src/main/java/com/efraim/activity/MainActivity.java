@@ -1,5 +1,6 @@
 package com.efraim.activity;
 
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
 	private static final int DICE_LOCKED = 2;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-
-
 		mConfirmButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -81,6 +81,22 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+
+		for(int i = 0; i < mDiceButtonArray.length; i++){
+			final Dice dice = mGame.getDiceForButton(i);// todo final här = ? kolla upp
+			mDiceButtonArray[i].setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					switch (dice.getDiceState()) {
+						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
+						break;
+						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
+						break;
+				}
+				updateDiceIcons();
+				}
+			});
+		}
 	}
 
 	public void updateDiceIcons(){
