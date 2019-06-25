@@ -2,5 +2,5 @@
     <string name="app_name">Thirty</string>
     <string name="roll_button">Roll!</string>
     <string name="confirm_button">Confirm choices</string>
-    <string name="welcome">Welcome! Get ready to gamble!</string>
+    <string name="welcome">Get ready to gamble! v.0.0.1</string>
 </resources>
