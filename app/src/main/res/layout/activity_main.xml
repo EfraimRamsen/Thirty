@@ -8,28 +8,31 @@
     tools:context=".MainActivity">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60sp"
             android:layout_marginBottom="20sp">
 
             <TextView
                 android:id="@+id/instructions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:baselineAligned="false"
                 android:text="@string/welcome"
                 android:textAlignment="center"
-                android:textSize="18sp"
                 android:textColor="@color/pink_text"
-                />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -39,11 +42,11 @@
             android:orientation="horizontal">
 
             <!--<Button-->
-                <!--android:id="@+id/dice1_button"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:background="@mipmap/dice1"-->
-                <!--/>-->
+            <!--android:id="@+id/dice1_button"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:background="@mipmap/dice1"-->
+            <!--/>-->
             <ImageButton
                 android:id="@+id/dice1_button"
                 android:layout_width="100dp"
@@ -68,8 +71,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/dice4_button"
@@ -89,6 +91,7 @@
                 android:layout_height="100dp"
                 android:background="@mipmap/dice6" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -99,24 +102,103 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20sp"
                 android:text="@string/roll_button"
-                android:textSize="30sp"
                 android:textColor="@color/colorAccent"
-                />
+                android:textSize="30sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="71dp">
 
             <Button
                 android:id="@+id/confirm_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/confirm_button"
-                android:textSize="16sp"
                 android:textColor="@color/grey_text"
-                />
+                android:textSize="16sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/choiceLow_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choiceLow_button" />
+
+            <Button
+                android:id="@+id/choice4_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice4_button" />
+
+            <Button
+                android:id="@+id/choice5_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice5_button" />
+
+            <Button
+                android:id="@+id/choice6_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice6_button" />
+
+            <Button
+                android:id="@+id/choice7_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice7_button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/choice8_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice8_button" />
+
+            <Button
+                android:id="@+id/choice9_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice9_button" />
+
+            <Button
+                android:id="@+id/choice10_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice10_button" />
+
+            <Button
+                android:id="@+id/choice11_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice11_button" />
+
+            <Button
+                android:id="@+id/choice12_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/choice12_button" />
         </LinearLayout>
 
     </LinearLayout>

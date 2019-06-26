@@ -5,4 +5,14 @@
     <string name="welcome">Get ready to gamble! v.0.0.1</string>
     <string name="instructions_after_roll">You\'re on a roll! Click on any dice you want to re-roll and then confirm your choices!</string>
     <string name="instructions_after_confirm">LOCKDOWN! Roll again!</string>
+    <string name="choiceLow_button">LOW</string>
+    <string name="choice4_button">4</string>
+    <string name="choice5_button">5</string>
+    <string name="choice6_button">6</string>
+    <string name="choice7_button">7</string>
+    <string name="choice8_button">8</string>
+    <string name="choice9_button">9</string>
+    <string name="choice10_button">10</string>
+    <string name="choice11_button">11</string>
+    <string name="choice12_button">12</string>
 </resources>
