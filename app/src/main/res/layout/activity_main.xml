@@ -29,9 +29,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:baselineAligned="false"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="1"
                 android:text="@string/welcome"
                 android:textAlignment="center"
-                android:textColor="@color/pink_text"
+                android:textColor="@color/grey_text"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -39,6 +42,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <!--<Button-->
@@ -49,46 +53,47 @@
             <!--/>-->
             <ImageButton
                 android:id="@+id/dice1_button"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:background="@mipmap/dice1"
 
                 />
 
             <ImageButton
                 android:id="@+id/dice2_button"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:background="@mipmap/dice2" />
 
             <ImageButton
                 android:id="@+id/dice3_button"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:background="@mipmap/dice3" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/dice4_button"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:background="@mipmap/dice4" />
 
             <ImageButton
                 android:id="@+id/dice5_button"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:background="@mipmap/dice5" />
 
             <ImageButton
                 android:id="@+id/dice6_button"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:background="@mipmap/dice6" />
         </LinearLayout>
 
@@ -122,7 +127,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <Button
@@ -162,7 +167,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <Button

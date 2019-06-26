@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#F700B1</color>
     <color name="colorPrimaryDark">#05727C</color>
-    <color name="colorAccent">#F7306F</color>
+    <color name="colorAccent">#B92CEC</color>
     <color name="grey_text">#C4C4C4</color>
-    <color name="pink_text">#BCFDC4FF</color>
+    <color name="pink_text">#BCFB7AFF</color>
 
 </resources>
