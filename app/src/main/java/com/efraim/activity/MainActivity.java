@@ -1,6 +1,6 @@
 package com.efraim.activity;
 
-import android.support.annotation.IdRes;
+ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 	private ImageButton[] mDiceButtonArray;
 	private Button mRollButton;
 	private Button mConfirmButton;
+	private Button[] mChoiceButtonArray;
 
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 		mGame = new Game();
 		mInstructionsTextView = findViewById(R.id.instructions);
+
 		mDiceButtonArray  =
 				new ImageButton[]{  findViewById(R.id.dice1_button),
 									findViewById(R.id.dice2_button),
@@ -38,11 +40,23 @@ public class MainActivity extends AppCompatActivity {
 									findViewById(R.id.dice5_button),
 									findViewById(R.id.dice6_button),
 				};
+		for(int i = 0; i < mDiceButtonArray.length; i++){
+			final Dice dice = mGame.getDiceForButton(i);// todo final här = ? kolla upp
+			mDiceButtonArray[i].setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					switch (dice.getDiceState()) {
+						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
+						break;
+						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
+						break;
+				}
+				updateDiceIcons();
+				}
+			});
+		}
 
-		mConfirmButton = findViewById(R.id.confirm_button);
 		mRollButton = findViewById(R.id.roll_button);
-		mConfirmButton.setEnabled(false);
-
 		mRollButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -59,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
+		mConfirmButton = findViewById(R.id.confirm_button);
+		mConfirmButton.setEnabled(false);
 		mConfirmButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -82,20 +98,41 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		for(int i = 0; i < mDiceButtonArray.length; i++){
-			final Dice dice = mGame.getDiceForButton(i);// todo final här = ? kolla upp
-			mDiceButtonArray[i].setOnClickListener(new View.OnClickListener(){
+		mChoiceButtonArray = new Button[]{  findViewById(R.id.choiceLow_button),
+											findViewById(R.id.choice4_button),
+											findViewById(R.id.choice5_button),
+											findViewById(R.id.choice6_button),
+											findViewById(R.id.choice7_button),
+											findViewById(R.id.choice8_button),
+											findViewById(R.id.choice9_button),
+											findViewById(R.id.choice10_button),
+											findViewById(R.id.choice11_button),
+											findViewById(R.id.choice12_button),
+		};
+		for(int i = 0; i < mChoiceButtonArray.length; i++){
+				final int index =i;
+			mChoiceButtonArray[i].setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					switch (dice.getDiceState()) {
-						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
-						break;
-						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
-						break;
-				}
-				updateDiceIcons();
+					//todo lyssnare för varje choice-knapp
+					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
 				}
 			});
+		}
+	}
+
+	public void changeChoiceButton(int i, boolean activate){
+		if(i < 0 || i > 9) {
+			System.out.println("Index out of bounds for mChoiceButtonArray"); //todo LOG message istället?
+			return;
+		}
+//		mChoiceButtonArray[i].setEnabled(activate);
+		mChoiceButtonArray[i].setSelected(activate);
+		if(!activate) {
+			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.grey_text));
+		}else{
+			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.colorAccent));
+
 		}
 	}
 
