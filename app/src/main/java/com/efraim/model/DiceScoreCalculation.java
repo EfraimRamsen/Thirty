@@ -12,20 +12,63 @@ public class DiceScoreCalculation {
 	public DiceScoreCalculation(int scoreChoice, Game game){
 		mRolledDiceArray = game.getDiceArray();
 		mScoreChoice = scoreChoice;
-		mMaxPossibleScore = (totalDiceScore(mRolledDiceArray) / scoreChoice) * scoreChoice;
+//		mMaxPossibleScore = (totalDiceScore(mRolledDiceArray) / scoreChoice) * scoreChoice;//fel
+		mMaxPossibleScore = maxPossibleScore(game.getDiceArray());
 
 		//todo test code
-		System.out.println("ScoreChoice: " + scoreChoice);
-		System.out.println("TotalDiceScore: " + totalDiceScore(mRolledDiceArray));
-		System.out.println("Max possible score: " + mMaxPossibleScore);
-		double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)scoreChoice;
-		System.out.println("Max possible score non clipped: " + maxNonClipped);
+		System.out.println();
+			System.out.println("ScoreChoice: " + scoreChoice);
+			System.out.println("TotalDiceScore: " + totalDiceScore(mRolledDiceArray));
+			System.out.println("Max possible score: " + mMaxPossibleScore);
+//			double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)scoreChoice;
+//			System.out.println("Max possible score non clipped: " + maxNonClipped);
 	}
 
 	public void diceCalculate(int startAtArrayIndex){
-		if(startAtArrayIndex > mRolledDiceArray.length){
+		if(startAtArrayIndex > mRolledDiceArray.length || startAtArrayIndex < 0){
 			//overflow, när man kommer till 0 igen så är det slut och man beräknar
+			//todo sänk maxPossiblescore?
+			return;
 		}
+
+
+	}
+
+	public int maxPossibleScore(Dice[] diceArray){
+		boolean[] diceIndexUsed = {false,false,false,false,false,false};
+		int maxPossibleScore = 0;
+		int tempScoreChoice = 0;
+
+		for(int i = 0; i < diceArray.length; i++){
+			int diceScore = diceArray[i].getDiceScore();
+
+			if(diceIndexUsed[i])
+				break;
+
+			// lägg till när tärning är samma som choiceknapp
+			if(diceScore == mScoreChoice){
+				maxPossibleScore += diceScore;
+				diceIndexUsed[i] = true;
+				break;
+			}
+			// lägg till när tärning är mindre än choiceknapp
+			if(diceScore < mScoreChoice){
+				//lägg till när tärning + det som sparats innan är samma som choiceknapp
+				if(tempScoreChoice + diceScore == mScoreChoice){
+					tempScoreChoice += diceScore;
+					maxPossibleScore += tempScoreChoice;
+					tempScoreChoice = 0;
+				}
+				//lägg till när tärning + det som sparats innan är mindre än choiceknapp
+				else if(tempScoreChoice + diceScore < mScoreChoice){
+					tempScoreChoice += diceScore;
+				}
+				diceIndexUsed[i] = true;
+				break;
+			}
+		}
+		maxPossibleScore = (maxPossibleScore / mScoreChoice) * mScoreChoice;
+		return maxPossibleScore;
 	}
 
 	public int totalDiceScore(Dice[] diceArray){
