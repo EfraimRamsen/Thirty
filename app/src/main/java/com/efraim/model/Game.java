@@ -3,6 +3,8 @@ package com.efraim.model;
 import java.util.Random;
 
 public class Game {
+
+
 	private Dice[] mDiceArray;
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
@@ -20,6 +22,9 @@ public class Game {
 //		Score score = new Score(); //todo använd den här, börjar på 0
 	}
 
+	public Dice[] getDiceArray() {
+		return mDiceArray;
+	}
 	public void rollAllDice(){
 		for (int i = 0; i < mDiceArray.length; i++){
 			if(mDiceArray[i].getDiceState() != DICE_LOCKED) {

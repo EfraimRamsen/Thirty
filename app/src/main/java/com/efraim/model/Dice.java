@@ -19,7 +19,7 @@ public class Dice {
 	}
 
 	/**
-	 * Sets the right image for a dice depending on its' score (1-6)
+	 * Sets the correct image for a dice depending on its' score (1-6)
 	 * and state (DICE_STANDARD, DICE_LOCKED, DICE_OFF).
 	 *
 	 * @param diceScore
