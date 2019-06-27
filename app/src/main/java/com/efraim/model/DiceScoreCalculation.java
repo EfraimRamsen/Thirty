@@ -42,6 +42,9 @@ public class DiceScoreCalculation {
 		for(int i = 0; i < diceArray.length; i++){
 			int diceScore = diceArray[i].getDiceScore();
 
+			if(diceScore > mScoreChoice)
+				diceIndexUsed[i] = true;
+
 			if(diceIndexUsed[i])
 				break;
 
@@ -51,8 +54,9 @@ public class DiceScoreCalculation {
 				diceIndexUsed[i] = true;
 				break;
 			}
+
 			// lägg till när tärning är mindre än choiceknapp
-			if(diceScore < mScoreChoice){
+			else {
 				//lägg till när tärning + det som sparats innan är samma som choiceknapp
 				if(tempScoreChoice + diceScore == mScoreChoice){
 					tempScoreChoice += diceScore;
