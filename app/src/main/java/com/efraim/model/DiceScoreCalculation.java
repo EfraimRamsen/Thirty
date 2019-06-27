@@ -4,23 +4,28 @@ public class DiceScoreCalculation {
 	private int mScoreChoice;
 	private int mMaxPossibleScore;
 	private int mRoadToScoreChoice;
+	private Dice[] mRolledDiceArray;
 	private Dice[] mUsedDiceArray;
 	private Dice[] mNotUsedDiceArray;
 
-	public DiceScoreCalculation(int scoreChoice, Dice[] rolledDice){
+
+	public DiceScoreCalculation(int scoreChoice, Game game){
+		mRolledDiceArray = game.getDiceArray();
 		mScoreChoice = scoreChoice;
-		mMaxPossibleScore = (totalDiceScore(rolledDice) / scoreChoice) * scoreChoice;
+		mMaxPossibleScore = (totalDiceScore(mRolledDiceArray) / scoreChoice) * scoreChoice;
 
 		//todo test code
 		System.out.println("ScoreChoice: " + scoreChoice);
-		System.out.println("TotalDiceScore: " + totalDiceScore(rolledDice));
+		System.out.println("TotalDiceScore: " + totalDiceScore(mRolledDiceArray));
 		System.out.println("Max possible score: " + mMaxPossibleScore);
-		double maxNonClipped = (double)totalDiceScore(rolledDice) / (double)scoreChoice;
+		double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)scoreChoice;
 		System.out.println("Max possible score non clipped: " + maxNonClipped);
 	}
 
 	public void diceCalculate(int startAtArrayIndex){
-
+		if(startAtArrayIndex > mRolledDiceArray.length){
+			//overflow, när man kommer till 0 igen så är det slut och man beräknar
+		}
 	}
 
 	public int totalDiceScore(Dice[] diceArray){
