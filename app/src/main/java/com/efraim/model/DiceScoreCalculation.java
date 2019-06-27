@@ -4,6 +4,7 @@ public class DiceScoreCalculation {
 	private int mScoreChoice;
 	private int mMaxPossibleScore;
 	private int mRoadToScoreChoice;
+	private int mTotalDiceScore;
 	private Dice[] mRolledDiceArray;
 	private Dice[] mUsedDiceArray;
 	private Dice[] mNotUsedDiceArray;
@@ -12,6 +13,7 @@ public class DiceScoreCalculation {
 	public DiceScoreCalculation(int scoreChoice, Game game){
 		mRolledDiceArray = game.getDiceArray();
 		mScoreChoice = scoreChoice;
+		mTotalDiceScore = totalDiceScore(game.getDiceArray());
 //		mMaxPossibleScore = (totalDiceScore(mRolledDiceArray) / scoreChoice) * scoreChoice;//fel
 		mMaxPossibleScore = maxPossibleScore(game.getDiceArray());
 
@@ -38,23 +40,39 @@ public class DiceScoreCalculation {
 		boolean[] diceIndexUsed = {false,false,false,false,false,false};
 		int maxPossibleScore = 0;
 		int tempScoreChoice = 0;
+		int loopRestart = 0;
 
-		for(int i = 0; i < diceArray.length; i++){
+		for(int i = 0; i < diceArray.length; i++) {
 			int diceScore = diceArray[i].getDiceScore();
 
-			if(diceScore > mScoreChoice)
-				diceIndexUsed[i] = true;
-
-			if(diceIndexUsed[i])
-				break;
-
 			// lägg till när tärning är samma som choiceknapp
-			if(diceScore == mScoreChoice){
+			if (diceScore == mScoreChoice) {
 				maxPossibleScore += diceScore;
 				diceIndexUsed[i] = true;
+
+				if(i == 5){
+					loopRestart++;
+					i = loopRestart;
+				}
+				continue;
+			}
+
+			if ((maxPossibleScore + tempScoreChoice) > (mTotalDiceScore - mScoreChoice)) {
+				//ja vad händer då?
+				//då går det inte att få mer poäng
 				break;
 			}
 
+			if (diceScore > mScoreChoice)
+				diceIndexUsed[i] = true;
+
+			if (diceIndexUsed[i]){
+				if(i == 5){
+					loopRestart++;
+					i = loopRestart;
+				}
+				continue;
+			}
 			// lägg till när tärning är mindre än choiceknapp
 			else {
 				//lägg till när tärning + det som sparats innan är samma som choiceknapp
@@ -67,13 +85,19 @@ public class DiceScoreCalculation {
 				else if(tempScoreChoice + diceScore < mScoreChoice){
 					tempScoreChoice += diceScore;
 				}
+
 				diceIndexUsed[i] = true;
-				break;
+				if(i == 5){
+					loopRestart++;
+					i = loopRestart;
+				}
+				continue;
 			}
 		}
 		maxPossibleScore = (maxPossibleScore / mScoreChoice) * mScoreChoice;
 		return maxPossibleScore;
 	}
+
 
 	public int totalDiceScore(Dice[] diceArray){
 		int totalDiceScore = 0;
