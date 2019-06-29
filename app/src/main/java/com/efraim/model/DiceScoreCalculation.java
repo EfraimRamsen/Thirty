@@ -1,7 +1,7 @@
 package com.efraim.model;
 
 public class DiceScoreCalculation {
-	private int mScoreChoice;
+	private int mButtonScoreChoice;
 	private int mMaxPossibleScore;
 	private int mRoadToScoreChoice;
 	private int mTotalDiceScore;
@@ -10,19 +10,19 @@ public class DiceScoreCalculation {
 	private Dice[] mNotUsedDiceArray;
 
 
-	public DiceScoreCalculation(int scoreChoice, Game game){
+	public DiceScoreCalculation(int buttonScoreChoice, Game game){
 		mRolledDiceArray = game.getDiceArray();
-		mScoreChoice = scoreChoice;
+		mButtonScoreChoice = buttonScoreChoice;
 		mTotalDiceScore = totalDiceScore(game.getDiceArray());
-//		mMaxPossibleScore = (totalDiceScore(mRolledDiceArray) / scoreChoice) * scoreChoice;//fel
+//		mMaxPossibleScore = (totalDiceScore(mRolledDiceArray) / buttonScoreChoice) * buttonScoreChoice;//fel
 		mMaxPossibleScore = maxPossibleScore(game.getDiceArray());
 
 		//todo test code
 		System.out.println();
-			System.out.println("ScoreChoice: " + scoreChoice);
+			System.out.println("ScoreChoice: " + buttonScoreChoice);
 			System.out.println("TotalDiceScore: " + totalDiceScore(mRolledDiceArray));
 			System.out.println("Max possible score: " + mMaxPossibleScore);
-//			double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)scoreChoice;
+//			double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)buttonScoreChoice;
 //			System.out.println("Max possible score non clipped: " + maxNonClipped);
 	}
 
@@ -46,7 +46,7 @@ public class DiceScoreCalculation {
 			int diceScore = diceArray[i].getDiceScore();
 
 			// lägg till när tärning är samma som choiceknapp
-			if (diceScore == mScoreChoice) {
+			if (diceScore == mButtonScoreChoice) {
 				maxPossibleScore += diceScore;
 				diceIndexUsed[i] = true;
 
@@ -57,13 +57,13 @@ public class DiceScoreCalculation {
 				continue;
 			}
 
-			if ((maxPossibleScore + tempScoreChoice) > (mTotalDiceScore - mScoreChoice)) {
+			if ((maxPossibleScore + tempScoreChoice) > (mTotalDiceScore - mButtonScoreChoice)) {
 				//ja vad händer då?
 				//då går det inte att få mer poäng
 				break;
 			}
 
-			if (diceScore > mScoreChoice)
+			if (diceScore > mButtonScoreChoice)
 				diceIndexUsed[i] = true;
 
 			if (diceIndexUsed[i]){
@@ -76,13 +76,13 @@ public class DiceScoreCalculation {
 			// lägg till när tärning är mindre än choiceknapp
 			else {
 				//lägg till när tärning + det som sparats innan är samma som choiceknapp
-				if(tempScoreChoice + diceScore == mScoreChoice){
+				if(tempScoreChoice + diceScore == mButtonScoreChoice){
 					tempScoreChoice += diceScore;
 					maxPossibleScore += tempScoreChoice;
 					tempScoreChoice = 0;
 				}
 				//lägg till när tärning + det som sparats innan är mindre än choiceknapp
-				else if(tempScoreChoice + diceScore < mScoreChoice){
+				else if(tempScoreChoice + diceScore < mButtonScoreChoice){
 					tempScoreChoice += diceScore;
 				}
 
@@ -94,7 +94,7 @@ public class DiceScoreCalculation {
 				continue;
 			}
 		}
-		maxPossibleScore = (maxPossibleScore / mScoreChoice) * mScoreChoice;
+		maxPossibleScore = (maxPossibleScore / mButtonScoreChoice) * mButtonScoreChoice;
 		return maxPossibleScore;
 	}
 

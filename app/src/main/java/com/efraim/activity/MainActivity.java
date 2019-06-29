@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
 				public void onClick(View v) {
 					//todo lyssnare för varje choice-knapp
 					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
-					new DiceScoreCalculation(index+3, mGame);
+//					new DiceScoreCalculation(index+3, mGame);
+					new DiceScoreCheck(index+3, mGame);
 				}
 			});
 		}
