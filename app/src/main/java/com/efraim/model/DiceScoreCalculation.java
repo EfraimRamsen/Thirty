@@ -17,7 +17,7 @@ public class DiceScoreCalculation {
 		mButtonScoreChoice = buttonScoreChoice;
 		mTotalDiceScore = totalDiceScore(game.getDiceArray());
 
-		mUsedDiceList = getDiceForMaxScore(buttonScoreChoice); //TODO jobba på den här metoden lite enklare, kolla först om en tärning fyller kraven, sen två osv.
+		mUsedDiceList = getDiceForMaxScore(); //TODO jobba på den här metoden lite enklare, kolla först om en tärning fyller kraven, sen två osv.
 
 
 		//todo test code
@@ -32,7 +32,7 @@ public class DiceScoreCalculation {
 	}
 
 
-	public ArrayList<Dice> getDiceForMaxScore(int buttonScoreChoice){
+	public ArrayList<Dice> getDiceForMaxScore(){
 		ArrayList<Dice> notUsedDice = new ArrayList<>(Arrays.asList(mRolledDiceArray));
 		ArrayList<Dice> usedDice = new ArrayList<>();
 		//todo gör undantag för LOW
@@ -67,15 +67,26 @@ public class DiceScoreCalculation {
 		if(notUsedDice.isEmpty())
 			return usedDice;
 
+		// score with three
 		for(Dice a : notUsedDice){
 			for(Dice b : notUsedDice){
-				if(a != b 	{
+				for(Dice c : notUsedDice){
+					if((a != b) && (b != c)){
+						if(a.getDiceScore()+b.getDiceScore()+c.getDiceScore() == mButtonScoreChoice){
+							usedDice.add(a);
+							usedDice.add(b);
+							usedDice.add(c);
+							System.out.println("Adding to usedDice: "+a+ " & "+b+" & "+c);//test
+							notUsedDice.remove(a);
+							notUsedDice.remove(b);
+							notUsedDice.remove(c);
+							System.out.println("Removing from notUsedDice "+a+ " & "+b+" & "+c);//test
+						}
+					}
+				}
 
+			}
 		}
-
-			}
-				int ab = a.getDiceScore() + b.getDiceScore();
-			}
 
 
 
