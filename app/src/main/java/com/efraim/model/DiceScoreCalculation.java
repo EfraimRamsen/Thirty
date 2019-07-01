@@ -2,6 +2,7 @@ package com.efraim.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class DiceScoreCalculation {
@@ -22,11 +23,12 @@ public class DiceScoreCalculation {
 
 		//todo test code
 		System.out.println();
+		System.out.println();
 		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray)/*mRolledDiceArray.toString()*/);
 		System.out.println("mUsedDiceList: "+mUsedDiceList.toString());
 		System.out.println("buttonScoreChoice: " + buttonScoreChoice);
 		System.out.println("TotalDiceScore: " + totalDiceScore(mRolledDiceArray));
-		System.out.println("Max possible score: " + mMaxPossibleScore);
+//		System.out.println("Max possible score: " + mMaxPossibleScore);
 //			double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)buttonScoreChoice;
 //			System.out.println("Max possible score non clipped: " + maxNonClipped);
 	}
@@ -35,15 +37,31 @@ public class DiceScoreCalculation {
 	public ArrayList<Dice> getDiceForMaxScore(){
 		ArrayList<Dice> notUsedDice = new ArrayList<>(Arrays.asList(mRolledDiceArray));
 		ArrayList<Dice> usedDice = new ArrayList<>();
-		//todo gör undantag för LOW
+		Iterator<Dice> notUsedDiceIterator = notUsedDice.iterator();
+
+		//LOW
+		if(mButtonScoreChoice < 4){
+			while(notUsedDiceIterator.hasNext()) {
+				Dice d = notUsedDiceIterator.next();
+				System.out.println("d"+d);
+				if (d.getDiceScore() < 4) {
+					usedDice.add(d);
+					System.out.println("LOW: Adding to usedDice: " + d);//test
+					System.out.println("LOW: Removing from notUsedDice: " + d);//test
+					notUsedDiceIterator.remove();
+				}
+			}
+				return usedDice;
+		}
 
 		//score with one
-		for(Dice d : notUsedDice){
+		while(notUsedDiceIterator.hasNext()){
+			Dice d = notUsedDiceIterator.next();
 			if(d.getDiceScore() == mButtonScoreChoice){
 				usedDice.add(d);
-				System.out.println("Adding to usedDice: "+d);//test
-				notUsedDice.remove(d);
-				System.out.println("Removing from notUsedDice: "+d);//test
+				System.out.println("ONE: Adding to usedDice: "+d);//test
+				System.out.println("ONE: Removing from notUsedDice: "+d);//test
+				notUsedDiceIterator.remove();
 			}
 		}
 
@@ -56,10 +74,10 @@ public class DiceScoreCalculation {
 				if(d != otherDice && (d.getDiceScore() + otherDice.getDiceScore() == mButtonScoreChoice))	{
 					usedDice.add(d);
 					usedDice.add(otherDice);
-					System.out.println("Adding to usedDice: "+d+ " & "+otherDice);//test
+					System.out.println("TWO: Adding to usedDice: "+d+ " & "+otherDice);//test
 					notUsedDice.remove(d);
 					notUsedDice.remove(otherDice);
-					System.out.println("Removing from notUsedDice: "+d + " & " + otherDice);//test
+					System.out.println("TWO: Removing from notUsedDice: "+d + " & " + otherDice);//test
 				}
 			}
 		}
@@ -103,69 +121,6 @@ public class DiceScoreCalculation {
 		}
 		return totalScore;
 	}
-
-//	public int getDiceForMaxScore(Dice[] diceArray){
-//		boolean[] diceIndexUsed = {false,false,false,false,false,false};
-//		int getDiceForMaxScore = 0;
-//		int tempScoreChoice = 0;
-//		int loopRestart = 0;
-//
-//		for(int i = 0; i < diceArray.length; i++) {
-//			int diceScore = diceArray[i].getDiceScore();
-//
-//			// lägg till när tärning är samma som choiceknapp
-//			if (diceScore == mButtonScoreChoice) {
-//				getDiceForMaxScore += diceScore;
-//				diceIndexUsed[i] = true;
-//
-//				if(i == 5){
-//					loopRestart++;
-//					i = loopRestart;
-//				}
-//				continue;
-//			}
-//
-//			if ((getDiceForMaxScore + tempScoreChoice) > (mTotalDiceScore - mButtonScoreChoice)) {
-//				//ja vad händer då?
-//				//då går det inte att få mer poäng
-//				break;
-//			}
-//
-//			if (diceScore > mButtonScoreChoice)
-//				diceIndexUsed[i] = true;
-//
-//			if (diceIndexUsed[i]){
-//				if(i == 5){
-//					loopRestart++;
-//					i = loopRestart;
-//				}
-//				continue;
-//			}
-//			// lägg till när tärning är mindre än choiceknapp
-//			else {
-//				//lägg till när tärning + det som sparats innan är samma som choiceknapp
-//				if(tempScoreChoice + diceScore == mButtonScoreChoice){
-//					tempScoreChoice += diceScore;
-//					getDiceForMaxScore += tempScoreChoice;
-//					tempScoreChoice = 0;
-//				}
-//				//lägg till när tärning + det som sparats innan är mindre än choiceknapp
-//				else if(tempScoreChoice + diceScore < mButtonScoreChoice){
-//					tempScoreChoice += diceScore;
-//				}
-//
-//				diceIndexUsed[i] = true;
-//				if(i == 5){
-//					loopRestart++;
-//					i = loopRestart;
-//				}
-//				continue;
-//			}
-//		}
-//		getDiceForMaxScore = (getDiceForMaxScore / mButtonScoreChoice) * mButtonScoreChoice;
-//		return getDiceForMaxScore;
-//	}
-
 
 	public int totalDiceScore(Dice[] diceArray){
 		int totalDiceScore = 0;

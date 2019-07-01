@@ -133,7 +133,7 @@ public class Dice {
 
 	@Override
 	public String toString(){
-		String message = "\nDiceScore:"+this.getDiceScore();
+		String message = ""+this.getDiceScore();
 		return message;
 	}
 }
