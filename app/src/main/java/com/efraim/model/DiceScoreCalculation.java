@@ -17,7 +17,7 @@ public class DiceScoreCalculation {
 		mButtonScoreChoice = buttonScoreChoice;
 		mTotalDiceScore = totalDiceScore(game.getDiceArray());
 
-		mUsedDiceList = getDiceForMaxScore(); //TODO jobba på den här metoden lite enklare, kolla först om en tärning fyller kraven, sen två osv.
+		mUsedDiceList = getDiceForMaxScore(buttonScoreChoice); //TODO jobba på den här metoden lite enklare, kolla först om en tärning fyller kraven, sen två osv.
 
 
 		//todo test code
@@ -32,49 +32,65 @@ public class DiceScoreCalculation {
 	}
 
 
-	public ArrayList<Dice> getDiceForMaxScore(){
+	public ArrayList<Dice> getDiceForMaxScore(int buttonScoreChoice){
 		ArrayList<Dice> notUsedDice = new ArrayList<>(Arrays.asList(mRolledDiceArray));
 		ArrayList<Dice> usedDice = new ArrayList<>();
+		//todo gör undantag för LOW
 
-
-
-		for(int i = diceStartIndex; i < 6; i++, addToSortedDiceArrayIndex++){
-
-//														System.out.println("På index "+addToSortedDiceArrayIndex //todo testkod
-//																+ " ska tärning med värde "+mRolledDiceArray[i].getDiceScore()+" skrivas.");
-
-			sortedDiceArray[addToSortedDiceArrayIndex] = mRolledDiceArray[i];
-														System.out.println("\nsortedDiceArray första loopen: "+diceArrayToString(sortedDiceArray));//todo testkod
+		//score with one
+		for(Dice d : notUsedDice){
+			if(d.getDiceScore() == mButtonScoreChoice){
+				usedDice.add(d);
+				System.out.println("Adding to usedDice: "+d);//test
+				notUsedDice.remove(d);
+				System.out.println("Removing from notUsedDice: "+d);//test
+			}
 		}
 
-		for(int i = 0; addToSortedDiceArrayIndex < 6; i++){
+		if(notUsedDice.isEmpty())
+			return usedDice;
 
-//														System.out.println("\nPå index "+addToSortedDiceArrayIndex //todo testkod
-//														+ " ska tärning med värde "+mRolledDiceArray[i].getDiceScore()+" skrivas.");
-
-			sortedDiceArray[addToSortedDiceArrayIndex] = mRolledDiceArray[i];
-														System.out.println("sortedDiceArray andra loopen: "+diceArrayToString(sortedDiceArray));//todo testkod
+		//score with two
+		for(Dice d : notUsedDice){
+			for(Dice otherDice : notUsedDice){
+				if(d != otherDice && (d.getDiceScore() + otherDice.getDiceScore() == mButtonScoreChoice))	{
+					usedDice.add(d);
+					usedDice.add(otherDice);
+					System.out.println("Adding to usedDice: "+d+ " & "+otherDice);//test
+					notUsedDice.remove(d);
+					notUsedDice.remove(otherDice);
+					System.out.println("Removing from notUsedDice: "+d + " & " + otherDice);//test
+				}
+			}
 		}
 
-		//loop: för varje tärning (1-6) (som är kvar i listan);
-		for(int i = 0; i < 6; i++){
+		if(notUsedDice.isEmpty())
+			return usedDice;
 
-			//om i + diceStartIndex är större än 5 så är det 5 - i
+		for(Dice a : notUsedDice){
+			for(Dice b : notUsedDice){
+				if(a != b 	{
+
 		}
-			//loopa igenom score withOneDice
-				//lägg till de som passar i listan
-			//loopa igenom score withTwoDice
-				// /.../ etc. Sen kör man hela metoden igen men börjar på diceStartIndex+1, sen tar man den som hade högst resultat
+
+			}
+				int ab = a.getDiceScore() + b.getDiceScore();
+			}
+
+
+
 
 
 
 		return usedDice;
 	}
 
-	public boolean scoreWithOneDice(int diceIndex){
-		if(mRolledDiceArray[diceIndex].getDiceScore() == mButtonScoreChoice)
-			return true;
-		return false;
+	public int listTotalScore(List<Dice> diceList){
+		int totalScore = 0;
+		for (Dice d : diceList){
+			totalScore += d.getDiceScore();
+		}
+		return totalScore;
 	}
 
 //	public int getDiceForMaxScore(Dice[] diceArray){
