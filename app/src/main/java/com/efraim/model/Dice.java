@@ -130,4 +130,10 @@ public class Dice {
 	public void setDiceState(int diceState) {
 		mDiceState = diceState;
 	}
+
+	@Override
+	public String toString(){
+		String message = "\nDiceScore:"+this.getDiceScore();
+		return message;
+	}
 }
