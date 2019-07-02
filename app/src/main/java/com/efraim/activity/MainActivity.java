@@ -17,10 +17,13 @@ public class MainActivity extends AppCompatActivity {
 	private Button mRollButton;
 	private Button mConfirmButton;
 	private Button[] mChoiceButtonArray;
+	private TextView mDiceThrowTextView;
+	private TextView mRoundTextView;
 
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
 	private static final int DICE_LOCKED = 2;
+
 
 
 	@Override
@@ -29,15 +32,25 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		mGame = new Game();
-		mInstructionsTextView = findViewById(R.id.instructions);
 
+		mInstructionsTextView = findViewById(R.id.instructions);
+		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
+		mRoundTextView = findViewById(R.id.round_value);
+
+		createDiceButtons();
+		createRollButton();
+		createConfirmButton();
+		createChoiceButtons();
+	}
+
+	public void createDiceButtons(){
 		mDiceButtonArray  =
 				new ImageButton[]{  findViewById(R.id.dice1_button),
-									findViewById(R.id.dice2_button),
-									findViewById(R.id.dice3_button),
-									findViewById(R.id.dice4_button),
-									findViewById(R.id.dice5_button),
-									findViewById(R.id.dice6_button),
+						findViewById(R.id.dice2_button),
+						findViewById(R.id.dice3_button),
+						findViewById(R.id.dice4_button),
+						findViewById(R.id.dice5_button),
+						findViewById(R.id.dice6_button),
 				};
 		for(int i = 0; i < mDiceButtonArray.length; i++){
 			final Dice dice = mGame.getDiceForButton(i);
@@ -46,21 +59,24 @@ public class MainActivity extends AppCompatActivity {
 				public void onClick(View v) {
 					switch (dice.getDiceState()) {
 						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
-						break;
+							break;
 						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
-						break;
-				}
-				updateDiceIcons();
+							break;
+					}
+					updateDiceIcons();
 				}
 			});
 		}
+	}
 
+	public void createRollButton(){
 		mRollButton = findViewById(R.id.roll_button);
 		mRollButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mGame.rollAllDice();
 				updateDiceIcons();
+				mGame.incrementDiceThrow();
 
 				mConfirmButton.setEnabled(true);
 				mConfirmButton.setTextColor(getResources().getColor(R.color.colorAccent));
@@ -71,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
 				mInstructionsTextView.setText(R.string.instructions_after_roll);
 			}
 		});
+	}
 
+	public void createConfirmButton(){
 		mConfirmButton = findViewById(R.id.confirm_button);
 		mConfirmButton.setEnabled(false);
 		mConfirmButton.setOnClickListener(new View.OnClickListener() {
@@ -96,19 +114,21 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+	}
 
+	public void createChoiceButtons(){
 		mChoiceButtonArray = new Button[]{  findViewById(R.id.choiceLow_button),
-											findViewById(R.id.choice4_button),
-											findViewById(R.id.choice5_button),
-											findViewById(R.id.choice6_button),
-											findViewById(R.id.choice7_button),
-											findViewById(R.id.choice8_button),
-											findViewById(R.id.choice9_button),
-											findViewById(R.id.choice10_button),
-											findViewById(R.id.choice11_button),
-											findViewById(R.id.choice12_button),
+				findViewById(R.id.choice4_button),
+				findViewById(R.id.choice5_button),
+				findViewById(R.id.choice6_button),
+				findViewById(R.id.choice7_button),
+				findViewById(R.id.choice8_button),
+				findViewById(R.id.choice9_button),
+				findViewById(R.id.choice10_button),
+				findViewById(R.id.choice11_button),
+				findViewById(R.id.choice12_button),
 		};
-		choiceButtonsActivated(false);
+
 		for(int i = 0; i < mChoiceButtonArray.length; i++){
 			final int index =i;
 			mChoiceButtonArray[i].setOnClickListener(new View.OnClickListener() {
@@ -120,40 +140,43 @@ public class MainActivity extends AppCompatActivity {
 				}
 			});
 		}
-	}
-
-	public void choiceButtonsActivated(boolean bool){
-		for(Button b :mChoiceButtonArray){
-			b.setActivated(bool);
-			if(bool){
-				b.setTextColor(getResources().getColor(R.color.grey_text));
-			}
-			else{
-				b.setTextColor(getResources().getColor(R.color.black_text));
-			}
-		}
-	}
-
-	public void changeChoiceButton(int i, boolean activate){
-		if(i < 0 || i > 9) {
-			System.out.println("Index out of bounds for mChoiceButtonArray"); //todo LOG message istället?
-			return;
-		}
-//		mChoiceButtonArray[i].setEnabled(activate);
-		mChoiceButtonArray[i].setSelected(activate);
-		if(!activate) {
-			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.grey_text));
-		}else{
-			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.colorAccent));
-
-		}
+		choiceButtonsActivated(false);
 	}
 
 	public void updateDiceIcons(){
+
 		for(int i = 0; i < mDiceButtonArray.length; i++){
 			Dice dice = mGame.getDiceForButton(i);
 			mDiceButtonArray[i].setBackgroundResource(dice.setDiceImage(dice.getDiceScore(),dice.getDiceState())
 			);
 		}
 	}
+
+	public void choiceButtonsActivated(boolean bool){
+		for(Button b :mChoiceButtonArray){
+			b.setEnabled(bool);
+			if(bool){
+				b.setTextColor(getResources().getColor(R.color.black_text));
+			}
+			else{
+				b.setTextColor(getResources().getColor(R.color.grey_text));
+			}
+		}
+	}
+
+	public void changeChoiceButton(int i, boolean activate){
+		if(i < 0 || i > 9) {
+			System.out.println("Index out of bounds for mChoiceButtonArray");
+			return;
+		}
+//		mChoiceButtonArray[i].setEnabled(activate);
+		mChoiceButtonArray[i].setSelected(activate);
+		if(!activate) {
+			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.black_text));
+		}else{
+			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.colorAccent));
+
+		}
+	}
+
 }

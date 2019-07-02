@@ -39,6 +39,7 @@ public class Game {
 	Dice[] getDiceArray() {
 		return mDiceArray;
 	}
+
 	public void rollAllDice(){
 		for (int i = 0; i < mDiceArray.length; i++){
 			if(mDiceArray[i].getDiceState() != DICE_LOCKED) {
@@ -88,6 +89,10 @@ public class Game {
 
 	public void setDiceThrow(int mDiceThrow) {
 		this.mDiceThrow = mDiceThrow;
+	}
+
+	public void incrementDiceThrow(){
+		this.mDiceThrow = mDiceThrow++;
 	}
 
 	public Score getScore() {
