@@ -1,6 +1,5 @@
 package com.efraim.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,8 +7,6 @@ import java.util.List;
 
 public class DiceScoreCalculation {
 	private int mButtonScoreChoice;
-	private int mMaxPossibleScore;
-	private int mSumOfAllRolledDice;
 	private Dice[] mRolledDiceArray;
 	private ArrayList<Dice> mUsedDiceList;
 
@@ -17,14 +14,9 @@ public class DiceScoreCalculation {
 	public DiceScoreCalculation(int buttonScoreChoice, Game game){
 		mRolledDiceArray = game.getDiceArray();
 		mButtonScoreChoice = buttonScoreChoice;
-		mSumOfAllRolledDice = sumOfAllDiceInArray(game.getDiceArray());
-
-		mUsedDiceList = getDiceForMaxScore(); //TODO jobba på den här metoden lite enklare, kolla först om en tärning fyller kraven, sen två osv.
-
+		mUsedDiceList = getDiceForMaxScore();
 
 		//todo test code
-		System.out.println();
-		System.out.println();
 		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray)/*mRolledDiceArray.toString()*/);
 		System.out.println("mUsedDiceList: "+mUsedDiceList.toString());
 		System.out.println("mButtonScoreChoice: " + mButtonScoreChoice);

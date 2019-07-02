@@ -1,6 +1,5 @@
 package com.efraim.activity;
 
- import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 									findViewById(R.id.dice6_button),
 				};
 		for(int i = 0; i < mDiceButtonArray.length; i++){
-			final Dice dice = mGame.getDiceForButton(i);// todo final här = ? kolla upp
+			final Dice dice = mGame.getDiceForButton(i);
 			mDiceButtonArray[i].setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View v) {

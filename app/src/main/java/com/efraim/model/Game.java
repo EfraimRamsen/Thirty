@@ -13,6 +13,10 @@ public class Game {
 			new Dice(1,1),
 	};
 	private Dice[] mDiceArray;
+	private int mRound; //1-10
+	private int mDiceThrow; //1-3
+	private Score score;
+
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
 	private static final int DICE_LOCKED = 2;
@@ -25,8 +29,10 @@ public class Game {
 		new Dice(4,DICE_STANDARD),
 		new Dice(5,DICE_STANDARD),
 		new Dice(6,DICE_STANDARD)};
+		mRound = 1;
+		mDiceThrow = 1;
 
-//		Score score = new Score(); //todo använd den här, börjar på 0
+		score = new Score(); //todo använd den här, börjar på 0
 	}
 
 	public Dice[] getDiceArray() {
@@ -40,13 +46,6 @@ public class Game {
 			}
 		}
 	}
-
-//	public void rollSelectedOffDice(){
-//		for (int i = 0; i < mDiceArray.length; i++){
-//				mDiceArray[i] = rollADice(mDiceArray[i]);
-//			}
-//		}
-//	}
 
 	public Dice rollADice(Dice dice){
 		dice.setDiceScore(randomD6());
@@ -75,15 +74,29 @@ public class Game {
 		return mDiceArray[diceButtonNumber];
 	}
 
-	//todo testkod
-	public String mDiceArrayToString(){
-		String message = "mDiceArrayToString: \n";
-		for(int i = 0; i < mDiceArray.length; i++ ){
-			message += "Dice"+(i+1) + ": Score = " + mDiceArray[i].getDiceScore() + " State = " + mDiceArray[i].getDiceState() +"\n";
-		}
-		return message;
+	public int getRound() {
+		return mRound;
 	}
 
+	public void setRound(int mRound) {
+		this.mRound = mRound;
+	}
+
+	public int getDiceThrow() {
+		return mDiceThrow;
+	}
+
+	public void setDiceThrow(int mDiceThrow) {
+		this.mDiceThrow = mDiceThrow;
+	}
+
+	public Score getScore() {
+		return score;
+	}
+
+	public void setScore(Score score) {
+		this.score = score;
+	}
 }
 
 
