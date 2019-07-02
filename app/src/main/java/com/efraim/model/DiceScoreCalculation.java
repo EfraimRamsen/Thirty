@@ -17,7 +17,7 @@ public class DiceScoreCalculation {
 		mUsedDiceList = getDiceForMaxScore();
 
 		//todo test code
-		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray)/*mRolledDiceArray.toString()*/);
+		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray));
 		System.out.println("mUsedDiceList: "+mUsedDiceList.toString());
 		System.out.println("mButtonScoreChoice: " + mButtonScoreChoice);
 		System.out.println("mSumOfAllRolledDice: " + sumOfAllDiceInArray(mRolledDiceArray));

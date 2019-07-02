@@ -2,8 +2,8 @@
     <string name="app_name">Thirty</string>
     <string name="roll_button">Roll!</string>
     <string name="confirm_button">Confirm choices</string>
-    <string name="welcome">Get ready to gamble! v.0.0.1</string>
-    <string name="instructions_after_roll">You\'re on a roll! Click on any dice you want to re-roll and then confirm your choices!</string>
+    <string name="welcome">Get ready to gamble!</string>
+    <string name="instructions_after_roll">Click on any dice you want to re-roll and then confirm your choices!</string>
     <string name="instructions_after_confirm">LOCKDOWN! Roll again!</string>
     <string name="choiceLow_button">LOW</string>
     <string name="choice4_button">4</string>

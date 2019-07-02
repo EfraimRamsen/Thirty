@@ -21,13 +21,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60sp"
-            android:layout_marginBottom="20sp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp">
 
             <TextView
                 android:id="@+id/instructions"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="70dp"
                 android:baselineAligned="false"
                 android:text="@string/welcome"
                 android:textAlignment="center"
@@ -126,7 +126,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
@@ -166,7 +166,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
@@ -208,7 +208,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="62dp"
             android:orientation="horizontal">
 
             <TextView

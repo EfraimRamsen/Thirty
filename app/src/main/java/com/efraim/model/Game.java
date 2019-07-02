@@ -3,15 +3,16 @@ package com.efraim.model;
 import java.util.Random;
 
 public class Game {
+	//TEST
+//	private Dice[] DICETESTARRAY = new Dice[]{
+//			new Dice(1,1),
+//			new Dice(1,1),
+//			new Dice(5,1),
+//			new Dice(6,1),
+//			new Dice(1,1),
+//			new Dice(1,1),
+//	};
 
-	private Dice[] DICETESTARRAY = new Dice[]{
-			new Dice(1,1),
-			new Dice(1,1),
-			new Dice(5,1),
-			new Dice(6,1),
-			new Dice(1,1),
-			new Dice(1,1),
-	};
 	private Dice[] mDiceArray;
 	private int mRound; //1-10
 	private int mDiceThrow; //1-3
@@ -35,19 +36,19 @@ public class Game {
 		score = new Score(); //todo använd den här, börjar på 0
 	}
 
-	public Dice[] getDiceArray() {
+	Dice[] getDiceArray() {
 		return mDiceArray;
 	}
 	public void rollAllDice(){
 		for (int i = 0; i < mDiceArray.length; i++){
 			if(mDiceArray[i].getDiceState() != DICE_LOCKED) {
-//				mDiceArray[i] = rollADice(mDiceArray[i]);
-				mDiceArray[i] = DICETESTARRAY[i]; //TODO TESTKOD för att bestämma värden
+				mDiceArray[i] = rollADice(mDiceArray[i]);
+//				mDiceArray[i] = DICETESTARRAY[i]; //TODO TESTKOD för att bestämma värden
 			}
 		}
 	}
 
-	public Dice rollADice(Dice dice){
+	private Dice rollADice(Dice dice){
 		dice.setDiceScore(randomD6());
 		dice.setDiceState(DICE_STANDARD);
 		return dice;
@@ -57,13 +58,12 @@ public class Game {
 	 * Create a random number for a D6 dice.
 	 * @return int 1-6
 	 */
-	public int randomD6(){
+	private int randomD6(){
 		Random r = new Random();
 		int low = 1;
 		int high = 7;
-		int result = r.nextInt(high-low) + low;
 
-		return result;
+		return r.nextInt(high-low) + low;
 	}
 
 	/**

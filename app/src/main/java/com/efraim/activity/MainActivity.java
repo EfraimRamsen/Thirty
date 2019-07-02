@@ -108,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
 											findViewById(R.id.choice11_button),
 											findViewById(R.id.choice12_button),
 		};
+		choiceButtonsActivated(false);
 		for(int i = 0; i < mChoiceButtonArray.length; i++){
-				final int index =i;
+			final int index =i;
 			mChoiceButtonArray[i].setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -118,6 +119,18 @@ public class MainActivity extends AppCompatActivity {
 					new DiceScoreCalculation(index+3, mGame);
 				}
 			});
+		}
+	}
+
+	public void choiceButtonsActivated(boolean bool){
+		for(Button b :mChoiceButtonArray){
+			b.setActivated(bool);
+			if(bool){
+				b.setTextColor(getResources().getColor(R.color.grey_text));
+			}
+			else{
+				b.setTextColor(getResources().getColor(R.color.black_text));
+			}
 		}
 	}
 
