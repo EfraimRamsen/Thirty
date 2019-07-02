@@ -114,6 +114,8 @@ public class DiceScoreCalculation {
 			}
 			if(totalScore == 6 || totalScore == 12){
 				usedDice = notUsedDice;
+				System.out.println("SIX: Adding to usedDice: "+notUsedDice.toString());//test
+				System.out.println("SIX: Removing from notUsedDice: " + notUsedDice.toString());//test
 				notUsedDice.clear();
 				return usedDice;
 			}

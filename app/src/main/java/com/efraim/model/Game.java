@@ -4,7 +4,14 @@ import java.util.Random;
 
 public class Game {
 
-
+	private Dice[] DICETESTARRAY = new Dice[]{
+			new Dice(1,1),
+			new Dice(1,1),
+			new Dice(1,1),
+			new Dice(1,1),
+			new Dice(1,1),
+			new Dice(1,1),
+	};
 	private Dice[] mDiceArray;
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
@@ -28,7 +35,8 @@ public class Game {
 	public void rollAllDice(){
 		for (int i = 0; i < mDiceArray.length; i++){
 			if(mDiceArray[i].getDiceState() != DICE_LOCKED) {
-				mDiceArray[i] = rollADice(mDiceArray[i]);
+//				mDiceArray[i] = rollADice(mDiceArray[i]);
+				mDiceArray[i] = DICETESTARRAY[i]; //TODO TESTKOD för att bestämma värden
 			}
 		}
 	}
