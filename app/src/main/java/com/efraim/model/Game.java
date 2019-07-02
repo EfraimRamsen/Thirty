@@ -5,12 +5,12 @@ import java.util.Random;
 public class Game {
 
 	private Dice[] DICETESTARRAY = new Dice[]{
-			new Dice(1,1),
-			new Dice(1,1),
-			new Dice(1,1),
-			new Dice(1,1),
-			new Dice(1,1),
-			new Dice(1,1),
+			new Dice(2,1),
+			new Dice(2,1),
+			new Dice(2,1),
+			new Dice(2,1),
+			new Dice(2,1),
+			new Dice(2,1),
 	};
 	private Dice[] mDiceArray;
 	private static final int DICE_OFF = 0;

@@ -1,5 +1,6 @@
 package com.efraim.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,15 +9,15 @@ import java.util.List;
 public class DiceScoreCalculation {
 	private int mButtonScoreChoice;
 	private int mMaxPossibleScore;
-	private int mTotalDiceScore;
+	private int mSumOfAllRolledDice;
 	private Dice[] mRolledDiceArray;
-	private List<Dice> mUsedDiceList;
+	private ArrayList<Dice> mUsedDiceList;
 
 
 	public DiceScoreCalculation(int buttonScoreChoice, Game game){
 		mRolledDiceArray = game.getDiceArray();
 		mButtonScoreChoice = buttonScoreChoice;
-		mTotalDiceScore = totalDiceScore(game.getDiceArray());
+		mSumOfAllRolledDice = sumOfAllDiceInArray(game.getDiceArray());
 
 		mUsedDiceList = getDiceForMaxScore(); //TODO jobba på den här metoden lite enklare, kolla först om en tärning fyller kraven, sen två osv.
 
@@ -26,11 +27,8 @@ public class DiceScoreCalculation {
 		System.out.println();
 		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray)/*mRolledDiceArray.toString()*/);
 		System.out.println("mUsedDiceList: "+mUsedDiceList.toString());
-		System.out.println("buttonScoreChoice: " + buttonScoreChoice);
-		System.out.println("TotalDiceScore: " + totalDiceScore(mRolledDiceArray));
-//		System.out.println("Max possible score: " + mMaxPossibleScore);
-//			double maxNonClipped = (double)totalDiceScore(mRolledDiceArray) / (double)buttonScoreChoice;
-//			System.out.println("Max possible score non clipped: " + maxNonClipped);
+		System.out.println("mButtonScoreChoice: " + mButtonScoreChoice);
+		System.out.println("mSumOfAllRolledDice: " + sumOfAllDiceInArray(mRolledDiceArray));
 	}
 
 
@@ -69,42 +67,42 @@ public class DiceScoreCalculation {
 			return usedDice;
 
 		//score with two
-		for(Dice d : notUsedDice){
-			for(Dice otherDice : notUsedDice){
-				if(d != otherDice && (d.getDiceScore() + otherDice.getDiceScore() == mButtonScoreChoice))	{
-					usedDice.add(d);
-					usedDice.add(otherDice);
-					System.out.println("TWO: Adding to usedDice: "+d+ " & "+otherDice);//test
-					notUsedDice.remove(d);
-					notUsedDice.remove(otherDice);
-					System.out.println("TWO: Removing from notUsedDice: "+d + " & " + otherDice);//test
-				}
-			}
-		}
+//		for(Dice d : notUsedDice){
+//			for(Dice otherDice : notUsedDice){
+//				if(d != otherDice && (d.getDiceScore() + otherDice.getDiceScore() == mButtonScoreChoice))	{
+//					usedDice.add(d);
+//					usedDice.add(otherDice);
+//					System.out.println("TWO: Adding to usedDice: "+d+ " & "+otherDice);//test
+//					notUsedDice.remove(d);
+//					notUsedDice.remove(otherDice);
+//					System.out.println("TWO: Removing from notUsedDice: "+d + " & " + otherDice);//test
+//				}
+//			}
+//		}
 
 		if(notUsedDice.isEmpty())
 			return usedDice;
 
 		// score with three
-		for(Dice a : notUsedDice){
-			for(Dice b : notUsedDice){
-				for(Dice c : notUsedDice){
-					if((a != b) && (b != c)){
-						if(a.getDiceScore()+b.getDiceScore()+c.getDiceScore() == mButtonScoreChoice){
-							usedDice.add(a);
-							usedDice.add(b);
-							usedDice.add(c);
-							System.out.println("Adding to usedDice: "+a+ " & "+b+" & "+c);//test
-							notUsedDice.remove(a);
-							notUsedDice.remove(b);
-							notUsedDice.remove(c);
-							System.out.println("Removing from notUsedDice "+a+ " & "+b+" & "+c);//test
-						}
-					}
-				}
-
-			}
-		}
+//		for(Dice a : notUsedDice){
+//			for(Dice b : notUsedDice){
+//				for(Dice c : notUsedDice){
+//					if((a != b) && (b != c)){
+//						if(a.getDiceScore()+b.getDiceScore()+c.getDiceScore() == mButtonScoreChoice){
+//							usedDice.add(a);
+//							usedDice.add(b);
+//							usedDice.add(c);
+//							System.out.println("Adding to usedDice: "+a+ " & "+b+" & "+c);//test
+//							notUsedDice.remove(a);
+//							notUsedDice.remove(b);
+//							notUsedDice.remove(c);
+//							System.out.println("Removing from notUsedDice "+a+ " & "+b+" & "+c);//test
+//						}
+//					}
+//				}
+//
+//			}
+//		}
 
 		//score with six
 		if(notUsedDice.size() == 6){
@@ -113,7 +111,7 @@ public class DiceScoreCalculation {
 				totalScore += d.getDiceScore();
 			}
 			if(totalScore == 6 || totalScore == 12){
-				usedDice = notUsedDice;
+				usedDice.addAll(notUsedDice);
 				System.out.println("SIX: Adding to usedDice: "+notUsedDice.toString());//test
 				System.out.println("SIX: Removing from notUsedDice: " + notUsedDice.toString());//test
 				notUsedDice.clear();
@@ -122,8 +120,7 @@ public class DiceScoreCalculation {
 		}
 
 
-
-
+		System.out.println("NO POINTS!");//test
 		return usedDice;
 	}
 
@@ -135,7 +132,7 @@ public class DiceScoreCalculation {
 		return totalScore;
 	}
 
-	public int totalDiceScore(Dice[] diceArray){
+	public int sumOfAllDiceInArray(Dice[] diceArray){
 		int totalDiceScore = 0;
 		for(int i = 0; i < diceArray.length; i++){
 			totalDiceScore += diceArray[i].getDiceScore();
