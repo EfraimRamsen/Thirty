@@ -77,6 +77,7 @@ public class DiceScoreCalculation {
 				if(a != b && a.getDiceScore() + b.getDiceScore() == mButtonScoreChoice){
 					usedDice.add(a);
 					usedDice.add(b);
+					System.out.println("TWO: Adding to usedDice: a:"+a+" b:"+b);//test
 				}
 			}
 		}
@@ -86,7 +87,101 @@ public class DiceScoreCalculation {
 			return usedDice;
 
 		// score with three
+		for(Dice a : notUsedDice){
+			if(usedDice.contains(a))
+				continue;
+			for(Dice b : notUsedDice){
+				if(usedDice.contains(b))
+					continue;
+				for(Dice c : notUsedDice){
+					if(usedDice.contains(c))
+						continue;
+					if(a != b && b != c && a.getDiceScore() + b.getDiceScore() + c.getDiceScore() == mButtonScoreChoice) {
+						usedDice.add(a);
+						usedDice.add(b);
+						usedDice.add(c);
+						System.out.println("THREE: Adding to usedDice: a:"+a+" b:"+b+" c:"+c);//test
+					}
+				}
+			}
+		}
+		notUsedDice.removeAll(usedDice);
 
+		if(notUsedDice.isEmpty())
+			return usedDice;
+
+		// score with four
+		for(Dice a : notUsedDice){
+			if(usedDice.contains(a))
+				continue;
+			for(Dice b : notUsedDice){
+				if(usedDice.contains(b))
+					continue;
+				for(Dice c : notUsedDice){
+						if(usedDice.contains(c))
+							continue;
+					for(Dice d : notUsedDice) {
+						if (usedDice.contains(d))
+							continue;
+						if (a != b && a != c && a != d &&
+							b != c && b != d &&
+							c != d &&
+							a.getDiceScore() + b.getDiceScore() + c.getDiceScore() + d.getDiceScore() == mButtonScoreChoice
+							) {
+
+							usedDice.add(a);
+							usedDice.add(b);
+							usedDice.add(c);
+							usedDice.add(d);
+							System.out.println("FOUR: Adding to usedDice: a:"+a+" b:"+b+" c:"+c+" d:"+d);//test
+						}
+					}
+				}
+			}
+		}
+		notUsedDice.removeAll(usedDice);
+
+		if(notUsedDice.isEmpty())
+			return usedDice;
+
+		// score with five
+		for(Dice a : notUsedDice){
+			if(usedDice.contains(a))
+				continue;
+			for(Dice b : notUsedDice){
+				if(usedDice.contains(b))
+					continue;
+				for(Dice c : notUsedDice){
+					if(usedDice.contains(c))
+						continue;
+					for(Dice d : notUsedDice) {
+						if (usedDice.contains(d))
+							continue;
+						for(Dice e : notUsedDice) {
+							if (usedDice.contains(e))
+								continue;
+							if (a != b && a != c && a != d && a != e &&
+								b != c && b != d && b != e &&
+								c != d && c != e &&
+								d != e &&
+								a.getDiceScore() + b.getDiceScore() + c.getDiceScore() + d.getDiceScore() + e.getDiceScore() == mButtonScoreChoice
+							) {
+								usedDice.add(a);
+								usedDice.add(b);
+								usedDice.add(c);
+								usedDice.add(d);
+								usedDice.add(e);
+								System.out.println("FIVE: Adding to usedDice: a:" + a + " b:" + b + " c:" + c + " d:" + d+" e:"+e);//test
+							}
+						}
+					}
+				}
+			}
+		}
+		notUsedDice.removeAll(usedDice);
+
+		if(notUsedDice.isEmpty())
+			return usedDice;
 
 		//score with six
 		if(notUsedDice.size() == 6){
