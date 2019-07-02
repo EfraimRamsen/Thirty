@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
 					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
 					DiceScoreCalculation diceScoreCalculation = new DiceScoreCalculation(index+3, mGame);
 					choiceButtonInstructionText(index,diceScoreCalculation.getUsedDiceListScore());
+
+					//TODO aktivera confirm choices-knappen och när man trycker på den ska rätt poäng sparas i Score-klassen
 				}
 			});
 		}
