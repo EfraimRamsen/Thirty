@@ -51,7 +51,7 @@ public class DiceScoreCalculation {
 					notUsedDiceIterator.remove();
 				}
 			}
-				return usedDice;
+			return usedDice;
 		}
 
 		//score with one
@@ -106,7 +106,18 @@ public class DiceScoreCalculation {
 			}
 		}
 
-
+		//score with six
+		if(notUsedDice.size() == 6){
+			int totalScore = 0;
+			for(Dice d : notUsedDice){
+				totalScore += d.getDiceScore();
+			}
+			if(totalScore == 6 || totalScore == 12){
+				usedDice = notUsedDice;
+				notUsedDice.clear();
+				return usedDice;
+			}
+		}
 
 
 
@@ -137,8 +148,8 @@ public class DiceScoreCalculation {
 				message += "null" + " ";
 			}
 			else{
-			message += diceArray[i].getDiceScore() + " ";
-				}
+				message += diceArray[i].getDiceScore() + " ";
+			}
 		}
 		return "["+message+"]";
 	}
