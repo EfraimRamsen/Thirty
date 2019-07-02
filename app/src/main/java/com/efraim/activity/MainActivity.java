@@ -75,16 +75,21 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				mGame.rollAllDice();
+				mGame.setAllDiceState(DICE_STANDARD);
 				updateDiceIcons();
-				mGame.incrementDiceThrow();
+				updateDiceThrowText();
 
-				mConfirmButton.setEnabled(true);
-				mConfirmButton.setTextColor(getResources().getColor(R.color.colorAccent));
-
+				if(mGame.getDiceThrow() >= 3) {
+					makeScoreButtonChoice();
+				}
+				else {
+					mGame.incrementDiceThrow();
+					mConfirmButton.setEnabled(true);
+					mConfirmButton.setTextColor(getResources().getColor(R.color.colorAccent));
+					mInstructionsTextView.setText(R.string.instructions_after_roll);
+				}
 				mRollButton.setEnabled(false);
 				mRollButton.setTextColor(getResources().getColor(R.color.grey_text));
-
-				mInstructionsTextView.setText(R.string.instructions_after_roll);
 			}
 		});
 	}
@@ -135,12 +140,62 @@ public class MainActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View v) {
 					//todo lyssnare för varje choice-knapp
+					choiceButtonsActivated(true);
+					deselectChoiceButtons();
 					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
-					new DiceScoreCalculation(index+3, mGame);
+					DiceScoreCalculation diceScoreCalculation = new DiceScoreCalculation(index+3, mGame);
+					choiceButtonInstructionText(index,diceScoreCalculation.getUsedDiceListScore());
 				}
 			});
 		}
 		choiceButtonsActivated(false);
+	}
+
+	public void makeScoreButtonChoice(){
+		mInstructionsTextView.setText(R.string.instructions_on_choice_buttons);
+		choiceButtonsActivated(true);
+		mGame.setAllDiceState(DICE_LOCKED);
+	}
+
+	public void choiceButtonInstructionText(int buttonIndex, int scoreForIndex){
+		String instructions = "";
+		switch (buttonIndex) {
+			case 0:
+				instructions = "LOW will scrape up the bottom numbers (1-3) and combine them to " +
+						"give you " + scoreForIndex + " points!";
+				break;
+			case 1:
+				instructions = "4 will collect dice in groups of four and hand over "+scoreForIndex+" points!";
+				break;
+			case 2:
+				instructions = "5 will collect dice in groups of five and yield "+scoreForIndex+" points!";
+				break;
+			case 3:
+				instructions = "6 will collect dice in groups of six and cash in "+scoreForIndex+" points!";
+				break;
+			case 4:
+				instructions = "7 will collect dice in groups of seven and get you "+scoreForIndex+" points!";
+				break;
+			case 5:
+				instructions = "8 will collect dice in groups of eight and present you "+scoreForIndex+" points!";
+				break;
+			case 6:
+				instructions = "9 will collect dice in groups of nine and throw you "+scoreForIndex+" points!";
+				break;
+			case 7:
+				instructions = "10 will collect dice in groups of ten and drop you "+scoreForIndex+" points!";
+				break;
+			case 8:
+				instructions = "11 will collect dice in groups of eleven and let you acquire "+scoreForIndex+" points!";
+				break;
+			case 9:
+				instructions = "12 will collect dice in groups of twelve and yeet ya' "+scoreForIndex+" points!";
+				break;
+			default:
+				System.out.println("Index needs to be 0-9");
+				break;
+		}
+		mInstructionsTextView.setText(instructions);
 	}
 
 	public void updateDiceIcons(){
@@ -149,6 +204,17 @@ public class MainActivity extends AppCompatActivity {
 			Dice dice = mGame.getDiceForButton(i);
 			mDiceButtonArray[i].setBackgroundResource(dice.setDiceImage(dice.getDiceScore(),dice.getDiceState())
 			);
+		}
+	}
+
+	public void updateDiceThrowText(){
+		String diceThrowText = mGame.getDiceThrow()+"/3";
+		mDiceThrowTextView.setText(diceThrowText);
+	}
+
+	public void deselectChoiceButtons(){
+		for(Button b :mChoiceButtonArray) {
+			b.setSelected(false);
 		}
 	}
 

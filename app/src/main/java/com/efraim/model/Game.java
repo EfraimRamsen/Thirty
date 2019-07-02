@@ -31,7 +31,7 @@ public class Game {
 		new Dice(5,DICE_STANDARD),
 		new Dice(6,DICE_STANDARD)};
 		mRound = 1;
-		mDiceThrow = 1;
+		mDiceThrow = 0;
 
 		score = new Score(); //todo använd den här, börjar på 0
 	}
@@ -53,6 +53,12 @@ public class Game {
 		dice.setDiceScore(randomD6());
 		dice.setDiceState(DICE_STANDARD);
 		return dice;
+	}
+
+	public void setAllDiceState(int state){
+		for(Dice d : mDiceArray){
+			d.setDiceState(state);
+		}
 	}
 
 	/**
@@ -92,7 +98,8 @@ public class Game {
 	}
 
 	public void incrementDiceThrow(){
-		this.mDiceThrow = mDiceThrow++;
+		mDiceThrow++;
+		System.out.println(mDiceThrow);
 	}
 
 	public Score getScore() {

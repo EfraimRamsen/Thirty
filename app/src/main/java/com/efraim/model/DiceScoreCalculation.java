@@ -195,6 +195,14 @@ public class DiceScoreCalculation {
 		return usedDice;
 	}
 
+	public int getUsedDiceListScore(){
+		int score = 0;
+		for(Dice d : mUsedDiceList){
+			score += d.getDiceScore();
+		}
+		return score;
+	}
+
 	public int listTotalScore(List<Dice> diceList){
 		int totalScore = 0;
 		for (Dice d : diceList){
