@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
 	private Game mGame;
@@ -105,14 +103,16 @@ public class MainActivity extends AppCompatActivity {
 		mConfirmButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// confirmButton when no re-roll chosen
 				if(mGame.allDiceStandardState()){
 					makeScoreButtonChoice();
 				}
-
-				if(mGame.allDiceLockedState()){
+				// confirmButton when a choiceButton is selected
+				else if(mGame.allDiceLockedState()){
 					mGame.finishRound();
+					updateDiceThrowText();
+					updateRoundText();
 					toggleButtonEnabled(mConfirmButton,false);
-//					toggleButtonEnabled(mRollButton,true);
 				}
 				else {
 					for (int i = 0; i < mDiceButtonArray.length; i++) {
@@ -131,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+	}
+
+	public void confirmButtonOnNoReroll(){
+
 	}
 
 	public void createChoiceButtons(){
@@ -156,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
 					mGame.diceScoreCalculation(index+3, mGame);
 					int scoreForChoiceButton = mGame.getDiceListScore(mGame.getLatestScoreDiceList());
-					choiceButtonInstructionText(index,scoreForChoiceButton);
+					setChoiceButtonInstructionText(index,scoreForChoiceButton);
 
 					//TODO aktivera confirm choices-knappen och när man trycker på den ska rätt poäng sparas i Score-klassen
 					toggleButtonEnabled(mConfirmButton, true);
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 		updateDiceIcons();
 	}
 
-	public void choiceButtonInstructionText(int buttonIndex, int scoreForIndex){
+	public void setChoiceButtonInstructionText(int buttonIndex, int scoreForIndex){
 		String instructions = "";
 		switch (buttonIndex) {
 			case 0:
@@ -238,6 +242,11 @@ public class MainActivity extends AppCompatActivity {
 	public void updateDiceThrowText(){
 		String diceThrowText = mGame.getDiceThrow()+"/3";
 		mDiceThrowTextView.setText(diceThrowText);
+	}
+
+	public void updateRoundText(){
+		String roundText = mGame.getRound()+"/10";
+		mRoundTextView.setText(roundText);
 	}
 
 	public void deselectChoiceButtons(){

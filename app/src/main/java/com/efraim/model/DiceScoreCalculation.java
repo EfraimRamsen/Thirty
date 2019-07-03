@@ -88,7 +88,9 @@ public class DiceScoreCalculation {
 				for(Dice c : notUsedDice){
 					if(usedDice.contains(c))
 						continue;
-					if(a != b && b != c && a.getDiceScore() + b.getDiceScore() + c.getDiceScore() == mButtonScoreChoice) {
+					if(a != b && a != c &&
+							b != c &&
+							a.getDiceScore() + b.getDiceScore() + c.getDiceScore() == mButtonScoreChoice) {
 						usedDice.add(a);
 						usedDice.add(b);
 						usedDice.add(c);
@@ -176,20 +178,48 @@ public class DiceScoreCalculation {
 			return usedDice;
 
 		//score with six
-		if(notUsedDice.size() == 6){
-			int totalScore = 0;
-			for(Dice d : notUsedDice){
-				totalScore += d.getDiceScore();
-			}
-			if(totalScore == 6 || totalScore == 12){
-				usedDice.addAll(notUsedDice);
-				System.out.println("SIX: Adding to usedDice: "+notUsedDice.toString());//test
-				System.out.println("SIX: Removing from notUsedDice: " + notUsedDice.toString());//test
-				notUsedDice.clear();
-				return usedDice;
+		for(Dice a : notUsedDice){
+			if(usedDice.contains(a))
+				continue;
+			for(Dice b : notUsedDice){
+				if(usedDice.contains(b))
+					continue;
+				for(Dice c : notUsedDice){
+					if(usedDice.contains(c))
+						continue;
+					for(Dice d : notUsedDice) {
+						if (usedDice.contains(d))
+							continue;
+						for(Dice e : notUsedDice) {
+							if (usedDice.contains(e))
+								continue;
+							for(Dice f : notUsedDice) {
+								if (usedDice.contains(f))
+									continue;
+
+								if (a != b && a != c && a != d && a != e && a != f &&
+										b != c && b != d && b != e && b != f &&
+										c != d && c != e && c != f &&
+										d != e && d != f &&
+										e != f &&
+										a.getDiceScore() + b.getDiceScore() + c.getDiceScore() + d.getDiceScore() + e.getDiceScore() + f.getDiceScore() == mButtonScoreChoice
+								) {
+									usedDice.add(a);
+									usedDice.add(b);
+									usedDice.add(c);
+									usedDice.add(d);
+									usedDice.add(e);
+									usedDice.add(f);
+
+									System.out.println("SIX: Adding to usedDice: a:" + a + " b:" + b + " c:" + c + " d:" + d + " e:" + e + " f:" + f);//test
+								}
+							}
+						}
+					}
+				}
 			}
 		}
-
+		notUsedDice.removeAll(usedDice);
 
 		System.out.println("Gått igenom alla test!");//test
 		return usedDice;
