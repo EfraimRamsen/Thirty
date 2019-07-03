@@ -1,5 +1,7 @@
 package com.efraim.model;
 
+import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,6 +21,7 @@ public class Game {
 	private int mDiceThrow; //1-3
 	private Score score;
 	private ArrayList<Dice> latestScoreDiceList;
+	private ArrayList<Button> usedChoiceButtons = new ArrayList<>();
 
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
@@ -40,6 +43,20 @@ public class Game {
 
 	Dice[] getDiceArray() {
 		return mDiceArray;
+	}
+
+	public boolean choiceButtonIsUsed(Button choiceButton){
+		if(usedChoiceButtons == null)
+			return false;
+		for(Button b : usedChoiceButtons){
+			if(b == choiceButton)
+				return true;
+		}
+		return false;
+	}
+
+	public ArrayList<Button> getUsedChoiceButtons() {
+		return usedChoiceButtons;
 	}
 
 	public void rollAllDice(){
@@ -136,6 +153,7 @@ public class Game {
 		else{
 		mRound++;
 		mDiceThrow = 0;
+		setAllDiceState(DICE_OFF);
 		//TODO starta ny runda + uppdatera text
 			}
 	}

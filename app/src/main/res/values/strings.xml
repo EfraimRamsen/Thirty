@@ -6,6 +6,7 @@
     <string name="instructions_after_roll">Click on any dice to re-roll and then confirm, or go directly to the score choice!</string>
     <string name="instructions_after_confirm">LOCKDOWN! Now roll!</string>
     <string name="instructions_on_choice_buttons">You can only use each score choice once per game! Choose wisely!</string>
+    <string name="instructions_on_new_round">Allright! Roll again!</string>
     <string name="choiceLow_button">LOW</string>
     <string name="choice4_button">4</string>
     <string name="choice5_button">5</string>

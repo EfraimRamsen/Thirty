@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 	private Game mGame;
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 					ib.setEnabled(true);
 				}
 				updateDiceIcons();
-
+	//TODO behövs villkor för när man kommer från en gammal runda till en ny?
 
 				if(mGame.getDiceThrow() < 2) {
 					toggleButtonEnabled(mConfirmButton,true);
@@ -109,10 +111,21 @@ public class MainActivity extends AppCompatActivity {
 				}
 				// confirmButton when a choiceButton is selected
 				else if(mGame.allDiceLockedState()){
+					for(Button b : mChoiceButtonArray){
+						if(b.isSelected()){
+							mGame.getUsedChoiceButtons().add(b);
+						}
+					}
 					mGame.finishRound();
+					toggleButtonEnabled(mConfirmButton,false);
+					toggleButtonEnabled(mRollButton,true);
+					deselectChoiceButtons();
+					choiceButtonsActivated(false);
 					updateDiceThrowText();
 					updateRoundText();
-					toggleButtonEnabled(mConfirmButton,false);
+					updateDiceIcons();
+					mInstructionsTextView.setText(R.string.instructions_on_new_round);
+
 				}
 				else {
 					for (int i = 0; i < mDiceButtonArray.length; i++) {
@@ -131,10 +144,6 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
-	}
-
-	public void confirmButtonOnNoReroll(){
-
 	}
 
 	public void createChoiceButtons(){
@@ -255,13 +264,14 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public void choiceButtonsActivated(boolean bool){
+	public void choiceButtonsActivated(boolean activate){
 		for(Button b :mChoiceButtonArray){
-			b.setEnabled(bool);
-			if(bool){
+			if(activate && !mGame.choiceButtonIsUsed(b)){
+				b.setEnabled(true);
 				b.setTextColor(getResources().getColor(R.color.black_text));
 			}
 			else{
+				b.setEnabled(false);
 				b.setTextColor(getResources().getColor(R.color.grey_text));
 			}
 		}
