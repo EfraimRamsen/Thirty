@@ -1,5 +1,6 @@
 package com.efraim.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
 		createRollButton();
 		createConfirmButton();
 		createChoiceButtons();
+	}
+
+	public void startScoreActivity(){
+		Intent intent = new Intent(this,ScoreActivity.class);
+
+		startActivity(intent);
 	}
 
 	public void createDiceButtons(){
@@ -117,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
 						}
 					}
 					mGame.finishRound();
+					if(mGame.getGameOver()){
+						startScoreActivity();
+					}
 					toggleButtonEnabled(mConfirmButton,false);
 					toggleButtonEnabled(mRollButton,true);
 					deselectChoiceButtons();

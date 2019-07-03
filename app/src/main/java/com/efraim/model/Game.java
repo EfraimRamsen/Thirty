@@ -2,6 +2,8 @@ package com.efraim.model;
 
 import android.widget.Button;
 
+import com.efraim.activity.MainActivity;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,6 +24,7 @@ public class Game {
 	private Score score;
 	private ArrayList<Dice> latestScoreDiceList;
 	private ArrayList<Button> usedChoiceButtons = new ArrayList<>();
+	private boolean gameOver = false;
 
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
@@ -35,10 +38,14 @@ public class Game {
 		new Dice(4,DICE_STANDARD),
 		new Dice(5,DICE_STANDARD),
 		new Dice(6,DICE_STANDARD)};
-		mRound = 1;
 		mDiceThrow = 0;
-
+//		mRound = 1;
+		mRound = 9; //TODO för testande, återställ sen
 		score = new Score(); //todo använd den här, börjar på 0
+	}
+
+	public boolean getGameOver(){
+		return gameOver;
 	}
 
 	Dice[] getDiceArray() {
@@ -148,18 +155,15 @@ public class Game {
 		ArrayList<Dice> roundScore = getLatestScoreDiceList();
 		score.addDiceList(roundScore);
 		if(mRound == 10){
-			finishGame();
+			gameOver = true;
+			System.out.println("Game over! :)");
+
 		}
 		else{
 		mRound++;
 		mDiceThrow = 0;
 		setAllDiceState(DICE_OFF);
-		//TODO starta ny runda + uppdatera text
 			}
-	}
-
-	public void finishGame(){//TODO starta aktivitet med score
-		System.out.println("GAME OVER! :)");
 	}
 
 	public Score getScore() {
