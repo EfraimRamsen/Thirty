@@ -17,4 +17,5 @@
     <string name="choice10_button">10</string>
     <string name="choice11_button">11</string>
     <string name="choice12_button">12</string>
+    <string name="total_score">Total score:</string>
 </resources>

@@ -302,4 +302,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	public Game getGame(){
+		return mGame;
+	}
 }

@@ -19,59 +19,38 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="16dp">
 
-        <TableRow
+        <TextView
+            android:id="@+id/round_score_text_view"
             android:layout_width="match_parent"
-            android:layout_height="40sp">
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView10"
-                android:layout_width="33dp"
+                android:id="@+id/total_score_text"
+                android:layout_width="196dp"
                 android:layout_height="wrap_content"
-                android:text="1:"
-                android:textSize="18sp" />
+                android:text="@string/total_score"
+                android:textAlignment="textStart"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/button_score_row_01"
+            <TextView
+                android:id="@+id/total_score_value"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/choiceLow_button" />
-
-            <ImageView
-                android:id="@+id/dice_01_1"
-                android:layout_width="40sp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/dice2" />
+                android:layout_weight="1"
+                android:text="0"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/dice_01_2"
-                android:layout_width="40sp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/dice3" />
-
-            <ImageView
-                android:id="@+id/dice_01_3"
-                android:layout_width="40sp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/dice4" />
-
-            <ImageView
-                android:id="@+id/dice_01_4"
-                android:layout_width="40sp"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/dice5" />
-
-            <ImageView
-                android:id="@+id/dice_01_5"
-                android:layout_width="40sp"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/dice6" />
-
-            <ImageView
-                android:id="@+id/dice_01_6"
-                android:layout_width="40sp"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/dice6" />
-        </TableRow>
     </LinearLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>
