@@ -8,7 +8,10 @@ public class Score {
 
 	public void addDiceList(ArrayList<Dice> diceList){
 		mDiceForEachRound.add(diceList);
+		mTotalScore = 0;
 		for (ArrayList<Dice> list : mDiceForEachRound){
+			if(list == null)
+				continue;
 			for(Dice d : list){
 				mTotalScore += d.getDiceScore();
 			}
@@ -27,7 +30,7 @@ public class Score {
 		return mDiceForEachRound;
 	}
 
-	public void setDiceForEachRound(ArrayList<ArrayList<Dice>> mDiceForEachRound) {
-		this.mDiceForEachRound = mDiceForEachRound;
+	public void setDiceForEachRound(ArrayList<Dice> mDiceListForEachRound) {
+		this.mDiceForEachRound.add(mDiceListForEachRound);
 	}
 }

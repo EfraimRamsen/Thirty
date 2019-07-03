@@ -20,7 +20,7 @@ public class DiceScoreCalculation {
 		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray));
 		System.out.println("mUsedDiceList: "+mUsedDiceList.toString());
 		System.out.println("mButtonScoreChoice: " + mButtonScoreChoice);
-		System.out.println("mSumOfAllRolledDice: " + sumOfAllDiceInArray(mRolledDiceArray));
+	System.out.println("mSumOfAllRolledDice: " + sumOfAllDiceInArray(mRolledDiceArray));
 	}
 
 
@@ -193,14 +193,6 @@ public class DiceScoreCalculation {
 
 		System.out.println("Gått igenom alla test!");//test
 		return usedDice;
-	}
-
-	public int getUsedDiceListScore(){
-		int score = 0;
-		for(Dice d : mUsedDiceList){
-			score += d.getDiceScore();
-		}
-		return score;
 	}
 
 	public int listTotalScore(List<Dice> diceList){

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 	private Game mGame;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
 							break;
 						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
+
 							break;
 					}
 					updateDiceIcons();
@@ -76,20 +79,22 @@ public class MainActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				mGame.rollAllDice();
 				mGame.setAllDiceState(DICE_STANDARD);
-				updateDiceIcons();
-				updateDiceThrowText();
-
-				if(mGame.getDiceThrow() >= 3) {
-					makeScoreButtonChoice();
+				for(ImageButton ib : mDiceButtonArray){
+					ib.setEnabled(true);
 				}
-				else {
-					mGame.incrementDiceThrow();
-					mConfirmButton.setEnabled(true);
-					mConfirmButton.setTextColor(getResources().getColor(R.color.colorAccent));
+				updateDiceIcons();
+
+
+				if(mGame.getDiceThrow() < 2) {
+					toggleButtonEnabled(mConfirmButton,true);
 					mInstructionsTextView.setText(R.string.instructions_after_roll);
 				}
-				mRollButton.setEnabled(false);
-				mRollButton.setTextColor(getResources().getColor(R.color.grey_text));
+				else {
+					makeScoreButtonChoice();
+				}
+					mGame.incrementDiceThrow();
+					updateDiceThrowText();
+					toggleButtonEnabled(mRollButton,false);
 			}
 		});
 	}
@@ -100,21 +105,28 @@ public class MainActivity extends AppCompatActivity {
 		mConfirmButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				for(int i = 0; i < mDiceButtonArray.length; i++){
-//					Dice dice = mGame.getDiceForButton(i);
-//					mDiceButtonArray[i].setBackgroundResource(dice.setDiceImage(dice.getDiceScore(),dice.getDiceState())
-//					);
-					Dice dice = mGame.getDiceForButton(i);
-					if(dice.getDiceState() == DICE_STANDARD){
-						dice.setDiceState(DICE_LOCKED);
-						updateDiceIcons();
+				if(mGame.allDiceStandardState()){
+					makeScoreButtonChoice();
+				}
+
+				if(mGame.allDiceLockedState()){
+					mGame.finishRound();
+					toggleButtonEnabled(mConfirmButton,false);
+//					toggleButtonEnabled(mRollButton,true);
+				}
+				else {
+					for (int i = 0; i < mDiceButtonArray.length; i++) {
+						Dice dice = mGame.getDiceForButton(i);
+						if (dice.getDiceState() == DICE_STANDARD) {
+							dice.setDiceState(DICE_LOCKED);
+						}
+						if (dice.getDiceState() == DICE_OFF) {
+							mDiceButtonArray[i].setEnabled(false);
+						}
 					}
-					mConfirmButton.setEnabled(false);
-					mConfirmButton.setTextColor(getResources().getColor(R.color.grey_text));
-
-					mRollButton.setEnabled(true);
-					mRollButton.setTextColor(getResources().getColor(R.color.colorAccent));
-
+					updateDiceIcons();
+					toggleButtonEnabled(mConfirmButton,false);
+					toggleButtonEnabled(mRollButton,true);
 					mInstructionsTextView.setText(R.string.instructions_after_confirm);
 				}
 			}
@@ -139,24 +151,38 @@ public class MainActivity extends AppCompatActivity {
 			mChoiceButtonArray[i].setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					//todo lyssnare för varje choice-knapp
 					choiceButtonsActivated(true);
 					deselectChoiceButtons();
 					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
-					DiceScoreCalculation diceScoreCalculation = new DiceScoreCalculation(index+3, mGame);
-					choiceButtonInstructionText(index,diceScoreCalculation.getUsedDiceListScore());
+					mGame.diceScoreCalculation(index+3, mGame);
+					int scoreForChoiceButton = mGame.getDiceListScore(mGame.getLatestScoreDiceList());
+					choiceButtonInstructionText(index,scoreForChoiceButton);
 
 					//TODO aktivera confirm choices-knappen och när man trycker på den ska rätt poäng sparas i Score-klassen
+					toggleButtonEnabled(mConfirmButton, true);
 				}
 			});
 		}
 		choiceButtonsActivated(false);
 	}
 
+	public void toggleButtonEnabled(Button button, boolean enabled){
+		button.setEnabled(enabled);
+		if(enabled){
+			button.setTextColor(getResources().getColor(R.color.colorAccent));
+
+		}
+		else {
+			button.setTextColor(getResources().getColor(R.color.grey_text));
+		}
+	}
+
 	public void makeScoreButtonChoice(){
 		mInstructionsTextView.setText(R.string.instructions_on_choice_buttons);
 		choiceButtonsActivated(true);
+		toggleButtonEnabled(mConfirmButton,false);
 		mGame.setAllDiceState(DICE_LOCKED);
+		updateDiceIcons();
 	}
 
 	public void choiceButtonInstructionText(int buttonIndex, int scoreForIndex){

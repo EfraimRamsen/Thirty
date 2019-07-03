@@ -1,5 +1,6 @@
 package com.efraim.model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
@@ -17,6 +18,7 @@ public class Game {
 	private int mRound; //1-10
 	private int mDiceThrow; //1-3
 	private Score score;
+	private ArrayList<Dice> latestScoreDiceList;
 
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
@@ -55,10 +57,33 @@ public class Game {
 		return dice;
 	}
 
+	public void diceScoreCalculation(int buttonScoreChoice, Game game){
+		DiceScoreCalculation d = new DiceScoreCalculation(buttonScoreChoice, game);
+		latestScoreDiceList = d.getDiceForMaxScore();
+	}
+
 	public void setAllDiceState(int state){
 		for(Dice d : mDiceArray){
 			d.setDiceState(state);
 		}
+	}
+
+	public boolean allDiceStandardState(){
+		for (Dice d : mDiceArray) {
+			if (d.getDiceState() != DICE_STANDARD){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean allDiceLockedState(){
+		for (Dice d : mDiceArray) {
+			if (d.getDiceState() != DICE_LOCKED){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -81,25 +106,42 @@ public class Game {
 		return mDiceArray[diceButtonNumber];
 	}
 
-	public int getRound() {
-		return mRound;
+	public ArrayList<Dice> getLatestScoreDiceList() {
+		return latestScoreDiceList;
 	}
 
-	public void setRound(int mRound) {
-		this.mRound = mRound;
+	public int getDiceListScore(ArrayList<Dice> diceList){
+		int score = 0;
+		for(Dice d : diceList){
+			score += d.getDiceScore();
+		}
+		return score;
 	}
 
 	public int getDiceThrow() {
 		return mDiceThrow;
 	}
 
-	public void setDiceThrow(int mDiceThrow) {
-		this.mDiceThrow = mDiceThrow;
-	}
-
 	public void incrementDiceThrow(){
 		mDiceThrow++;
 		System.out.println(mDiceThrow);
+	}
+
+	public void finishRound(){
+		ArrayList<Dice> roundScore = getLatestScoreDiceList();
+		score.addDiceList(roundScore);
+		if(mRound == 10){
+			finishGame();
+		}
+		else{
+		mRound++;
+		mDiceThrow = 0;
+		//TODO starta ny runda + uppdatera text
+			}
+	}
+
+	public void finishGame(){//TODO starta aktivitet med score
+		System.out.println("GAME OVER! :)");
 	}
 
 	public Score getScore() {
@@ -108,6 +150,18 @@ public class Game {
 
 	public void setScore(Score score) {
 		this.score = score;
+	}
+
+	public void setDiceThrow(int mDiceThrow) {
+		this.mDiceThrow = mDiceThrow;
+	}
+
+	public int getRound() {
+		return mRound;
+	}
+
+	public void setRound(int mRound) {
+		this.mRound = mRound;
 	}
 }
 
