@@ -44,8 +44,7 @@ public class Game {
 		new Dice(5,DICE_STANDARD),
 		new Dice(6,DICE_STANDARD)};
 		mDiceThrow = 0;
-//		mRound = 1;
-		mRound = 9; //TODO för testande, återställ sen
+		mRound = 1;
 		score = new Score();
 	}
 
@@ -204,9 +203,9 @@ public class Game {
 	}
 
 	/**
-	 * //TODO
-	 * @param diceList
-	 * @return
+	 * Calculates the total dice score for a list of dice
+	 * @param diceList, the ArrayList of dice that should be calculated
+	 * @return int score, the total score integer value
 	 */
 	public int getDiceListScore(ArrayList<Dice> diceList){
 		int score = 0;
@@ -216,15 +215,27 @@ public class Game {
 		return score;
 	}
 
+	/**
+	 * @return int mDiceThrow, the number of throws that has been made
+	 * under the active round (0-3)
+	 */
 	public int getDiceThrow() {
 		return mDiceThrow;
 	}
 
+	/**
+	 * Increase int mDiceThrow, this should happen after pushing the roll button
+	 */
 	public void incrementDiceThrow(){
 		mDiceThrow++;
-		System.out.println(mDiceThrow);
 	}
 
+	/**
+	 * Used to finish a round (the game has a total of 10 rounds). If the last round is finishing,
+	 * the gameOver boolean will be set to true and the button listener createConfirmButton() in
+	 * MainActivity will open the score activity. Otherwise it will increment the round number,
+	 * reset the dice throw number and set all dice to state DICE_OFF
+	 */
 	public void finishRound(){
 		ArrayList<Dice> roundScore = getLatestScoreDiceList();
 		score.addDiceList(roundScore);
@@ -240,6 +251,9 @@ public class Game {
 			}
 	}
 
+	/**
+	 * @return int mRound, the round number that is active
+	 */
 	public int getRound() {
 		return mRound;
 	}
