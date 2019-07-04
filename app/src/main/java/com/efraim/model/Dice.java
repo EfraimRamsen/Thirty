@@ -106,15 +106,6 @@ public class Dice {
 		return imageResId;
 	}
 
-
-	public int getImageResId() {
-		return mImageResId;
-	}
-
-	public void setImageResId(int imageResId) {
-		mImageResId = imageResId;
-	}
-
 	public int getDiceScore() {
 		return mDiceScore;
 	}

@@ -21,10 +21,10 @@ public class DiceScoreCalculation {
 	 * @param buttonScoreChoice the score choice button being pressed, supposed
 	 *                          to be an int 3-12 where number 3 = the 'LOW' choice and the others
 	 *                          are the score choices 4-12
-	 * @param game the used instance of the class Game, used to work with game.getDiceArray();
+	 * @param rolledDiceArray, the array containing the currently rolled and displayed Dice objects;
 	 */
-	DiceScoreCalculation(int buttonScoreChoice, Game game){
-		mRolledDiceArray = game.getDiceArray();
+	DiceScoreCalculation(int buttonScoreChoice, Dice[] rolledDiceArray){
+		mRolledDiceArray = rolledDiceArray;
 		mButtonScoreChoice = buttonScoreChoice;
 		mUsedDiceList = getDiceForMaxScore();
 

@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 					choiceButtonsActivated(true);
 					deselectChoiceButtons();
 					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
-					mGame.diceScoreCalculation(index+3, mGame);
+					mGame.diceScoreCalculation(index+3, mGame.getDiceArray());
 					int scoreForChoiceButton = mGame.getDiceListScore(mGame.getLatestScoreDiceList());
 					setChoiceButtonInstructionText(index,scoreForChoiceButton);
 
