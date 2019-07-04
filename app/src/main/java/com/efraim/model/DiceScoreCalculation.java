@@ -3,15 +3,27 @@ package com.efraim.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
+/**
+ * Calculates the score for a chosen score button (mButtonScoreChoice)
+ * by going through all the rolled dice (mRolledDiceArray) and
+ * saving the dice that are used for scoring (mUsedDiceList).
+ * @author Efraim Ramsén
+ */
 public class DiceScoreCalculation {
 	private int mButtonScoreChoice;
 	private Dice[] mRolledDiceArray;
 	private ArrayList<Dice> mUsedDiceList;
 
 
-	public DiceScoreCalculation(int buttonScoreChoice, Game game){
+	/**
+	 * Constructor that sets mRolledDiceArray, mButtonScoreChoice and mUsedDiceList
+	 * @param buttonScoreChoice the score choice button being pressed, supposed
+	 *                          to be an int 3-12 where number 3 = the 'LOW' choice and the others
+	 *                          are the score choices 4-12
+	 * @param game the used instance of the class Game, used to work with game.getDiceArray();
+	 */
+	DiceScoreCalculation(int buttonScoreChoice, Game game){
 		mRolledDiceArray = game.getDiceArray();
 		mButtonScoreChoice = buttonScoreChoice;
 		mUsedDiceList = getDiceForMaxScore();
@@ -20,11 +32,26 @@ public class DiceScoreCalculation {
 		System.out.println("mRolledDiceArray: "+diceArrayToString(mRolledDiceArray));
 		System.out.println("mUsedDiceList: "+mUsedDiceList.toString());
 		System.out.println("mButtonScoreChoice: " + mButtonScoreChoice);
-	System.out.println("mSumOfAllRolledDice: " + sumOfAllDiceInArray(mRolledDiceArray));
+		System.out.println("mSumOfAllRolledDice: " + sumOfAllDiceInArray(mRolledDiceArray));
 	}
 
-
-	public ArrayList<Dice> getDiceForMaxScore(){
+	/**
+	 * The massive method that calculates what dice in mRolledDiceArray can be used to
+	 * achieve the maximum possible score for the chosen score button (mButtonScoreChoice).
+	 * It starts by calculating if the score choice is 'LOW' and then continues with checking
+	 * the lowest amounts of dice that can be used to achieve for one group of the chosen score.
+	 *
+	 * E.g. if the chosen score is 5 and there is a dice that is 5, that will be used first, then
+	 * groups of two e.g. 3 and 2 will be used, then groups of three etc.
+	 *
+	 * At the start all the rolled dice in the 'mRolledDiceArray' will be put in the local
+	 * ArrayList 'notUsedDice', and when a dice is used it's added to the ArrayList 'usedDice'
+	 * and removed from 'notUsedDice'.
+	 *
+	 * @return usedDice, the ArrayList with Dice objects that are used. If the list is empty,
+	 * the score for that round will be 0.
+	 */
+	ArrayList<Dice> getDiceForMaxScore(){
 		ArrayList<Dice> notUsedDice = new ArrayList<>(Arrays.asList(mRolledDiceArray));
 		ArrayList<Dice> usedDice = new ArrayList<>();
 
@@ -60,8 +87,8 @@ public class DiceScoreCalculation {
 			return usedDice;
 
 		//score with two
-		//TODO buggfix (kanske på alla "score"
-		/**
+		//TODO buggfix (kanske på alla "score")
+		/*
 		 * I/System.out: TWO: Adding to usedDice: a:6 b:3
 		 * I/chatty: uid=10286(com.efraim.activity) identical 1 line
 		 * I/System.out: TWO: Adding to usedDice: a:6 b:3
@@ -238,23 +265,27 @@ public class DiceScoreCalculation {
 		return usedDice;
 	}
 
-	public int listTotalScore(List<Dice> diceList){
-		int totalScore = 0;
-		for (Dice d : diceList){
-			totalScore += d.getDiceScore();
-		}
-		return totalScore;
-	}
-
-	public int sumOfAllDiceInArray(Dice[] diceArray){
+	/**
+	 * TEST
+	 * Used for test printouts.
+	 * @param diceArray an array of rolled dice that should be calculated.
+	 * @return totalDiceScore, the total score of the dice in the parameter array.
+	 */
+	private int sumOfAllDiceInArray(Dice[] diceArray){
 		int totalDiceScore = 0;
-		for(int i = 0; i < diceArray.length; i++){
-			totalDiceScore += diceArray[i].getDiceScore();
+		for (Dice d : diceArray) {
+			totalDiceScore += d.getDiceScore();
 		}
 		return totalDiceScore;
 	}
 
-	public String diceArrayToString(Dice[] diceArray){
+	/**
+	 * TEST
+	 * Used for test printouts
+	 * @param diceArray the array of dice that should be printed.
+	 * @return String message, the printout like: [ 1 2 3 4 5 6 ]
+	 */
+	private String diceArrayToString(Dice[] diceArray){
 		String message = " ";
 		for(int i = 0; i < diceArray.length; i++){
 			if(diceArray[i] == null) {
