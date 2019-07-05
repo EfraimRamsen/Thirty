@@ -4,22 +4,26 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.efraim.model.Game;
-import com.efraim.activity.MainActivity;
+import com.efraim.model.Score;
 
+/**
+ * //TODO This class will display the score for each round and the total score in activity_score.xml when complete
+ * @author Efraim Ramsén
+ */
 public class ScoreActivity extends AppCompatActivity {
 
 	private TextView scoreForAllRounds;
 	private TextView totalScoreValue;
-	private Game mGame;
+	private Score score;
 
 	@Override
 	protected void onCreate(Bundle savedInstranceState) {
 		super.onCreate(savedInstranceState);
 		setContentView(R.layout.activity_score);
 
-		//TODO skapa loop som skriver ut nummer på runda, vald knapp och poäng för tärningar
-		//TODO importera game eller skicka med ett intent?
+		//TODO importera Game.getScore()
+		//TODO display used dice and score button for each round
+		//TODO display total score
 
 
 

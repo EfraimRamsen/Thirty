@@ -87,7 +87,7 @@ public class DiceScoreCalculation {
 			return usedDice;
 
 		//score with two
-		//TODO buggfix (kanske på alla "score")
+		//TODO buggfix, den lägger till dubletter
 		/*
 		 * I/System.out: TWO: Adding to usedDice: a:6 b:3
 		 * I/chatty: uid=10286(com.efraim.activity) identical 1 line

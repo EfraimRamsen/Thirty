@@ -10,8 +10,13 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
-import java.util.ArrayList;
-
+/**
+ * This class handles the buttons and textviews visible on activity_main.xml
+ * and starts a new instance of the class Game when created.
+ * The buttons have conditions in their onClick() methods depending on
+ * what stage game is in.
+ * @author Efraim Ramsén
+ */
 public class MainActivity extends AppCompatActivity {
 
 	private Game mGame;
@@ -27,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
 	private static final int DICE_STANDARD = 1;
 	private static final int DICE_LOCKED = 2;
 
-
-
+	/**
+	 * Starts a new instance of Game when created and sets the listener for
+	 * the buttons and the first text instructions.
+	 * @param savedInstanceState //TODO, this is not customized yet and state is not saved on rotate/restart
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,12 +54,19 @@ public class MainActivity extends AppCompatActivity {
 		createChoiceButtons();
 	}
 
+	/**
+	 * Starts the score activity, this is called when the game is over
+	 */
 	public void startScoreActivity(){
 		Intent intent = new Intent(this,ScoreActivity.class);
 
 		startActivity(intent);
 	}
 
+	/**
+	 * Create dice buttons and set onClick listener. The dice buttons are
+	 * set in an array and used with index (0-5) to reach the individual buttons.
+	 */
 	public void createDiceButtons(){
 		mDiceButtonArray  =
 				new ImageButton[]{  findViewById(R.id.dice1_button),
@@ -79,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * Create the roll button and set the onClick listener.
+	 */
 	public void createRollButton(){
 		mRollButton = findViewById(R.id.roll_button);
 		mRollButton.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
 				for(ImageButton ib : mDiceButtonArray){
 					ib.setEnabled(true);
 				}
+
 				updateDiceIcons();
-	//TODO behövs villkor för när man kommer från en gammal runda till en ny?
 
 				if(mGame.getDiceThrow() < 2) {
 					toggleButtonEnabled(mConfirmButton,true);
@@ -99,13 +117,21 @@ public class MainActivity extends AppCompatActivity {
 				else {
 					makeScoreButtonChoice();
 				}
-					mGame.incrementDiceThrow();
-					updateDiceThrowText();
-					toggleButtonEnabled(mRollButton,false);
+
+				mGame.incrementDiceThrow();
+				updateDiceThrowText();
+				toggleButtonEnabled(mRollButton,false);
 			}
 		});
 	}
 
+	/**
+	 * Create the confirm button and the onClick listener. The confirm button
+	 * is used to confirm what dice should be re-rolled or what score choice button
+	 * should be used to finish the round, so there are conditions to see if there are any
+	 * dice with state DICE_OFF that should be re-rolled or if there are any score choice buttons
+	 * that are enabled and selected that should be used to finish a round.
+	 */
 	public void createConfirmButton(){
 		mConfirmButton = findViewById(R.id.confirm_button);
 		mConfirmButton.setEnabled(false);
@@ -156,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 
+	/**
+	 * Create the choice buttons in an array and set the onClick listener.
+	 */
 	public void createChoiceButtons(){
 		mChoiceButtonArray = new Button[]{  findViewById(R.id.choiceLow_button),
 				findViewById(R.id.choice4_button),
@@ -176,12 +205,10 @@ public class MainActivity extends AppCompatActivity {
 				public void onClick(View v) {
 					choiceButtonsActivated(true);
 					deselectChoiceButtons();
-					changeChoiceButton(index, !mChoiceButtonArray[index].isSelected());
+					setChoiceButtonSelected(index, !mChoiceButtonArray[index].isSelected());
 					mGame.diceScoreCalculation(index+3, mGame.getDiceArray());
 					int scoreForChoiceButton = mGame.getDiceListScore(mGame.getLatestScoreDiceList());
 					setChoiceButtonInstructionText(index,scoreForChoiceButton);
-
-					//TODO aktivera confirm choices-knappen och när man trycker på den ska rätt poäng sparas i Score-klassen
 					toggleButtonEnabled(mConfirmButton, true);
 				}
 			});
@@ -189,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
 		choiceButtonsActivated(false);
 	}
 
+	/**
+	 * Sets a button to enabled or not enabled and changes the button text color
+	 * @param button, Button object that is being set
+	 * @param enabled, boolean true or false
+	 */
 	public void toggleButtonEnabled(Button button, boolean enabled){
 		button.setEnabled(enabled);
 		if(enabled){
@@ -200,6 +232,11 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * This method is run when the player is finished rolling and re-rolling the dice
+	 * to activate the score choice buttons for being pressed and deactivate the confirm
+	 * button before a choice button is pressed. All the dice are being locked.
+	 */
 	public void makeScoreButtonChoice(){
 		mInstructionsTextView.setText(R.string.instructions_on_choice_buttons);
 		choiceButtonsActivated(true);
@@ -208,6 +245,12 @@ public class MainActivity extends AppCompatActivity {
 		updateDiceIcons();
 	}
 
+	/**
+	 * This sets a slightly different text for each score choice button that is pressed,
+	 * just for fun :)
+	 * @param buttonIndex, the score button that is being pressed
+	 * @param scoreForIndex, the score that using the chosen score button will give
+	 */
 	public void setChoiceButtonInstructionText(int buttonIndex, int scoreForIndex){
 		String instructions = "";
 		switch (buttonIndex) {
@@ -249,8 +292,11 @@ public class MainActivity extends AppCompatActivity {
 		mInstructionsTextView.setText(instructions);
 	}
 
+	/**
+	 * Updates the images for all the dice in the dice array depending on the
+	 * score and state of each dice.
+	 */
 	public void updateDiceIcons(){
-
 		for(int i = 0; i < mDiceButtonArray.length; i++){
 			Dice dice = mGame.getDiceForButton(i);
 			mDiceButtonArray[i].setBackgroundResource(dice.setDiceImage(dice.getDiceScore(),dice.getDiceState())
@@ -258,22 +304,38 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * Updates the visible dice throw number (0-3)
+	 */
 	public void updateDiceThrowText(){
 		String diceThrowText = mGame.getDiceThrow()+"/3";
 		mDiceThrowTextView.setText(diceThrowText);
 	}
 
+	/**
+	 * Updates the visible round number (1-10)
+	 */
 	public void updateRoundText(){
 		String roundText = mGame.getRound()+"/10";
 		mRoundTextView.setText(roundText);
 	}
 
+	/**
+	 * Set all score choice buttons to not be selected,
+	 * used before marking a clicked button as selected as
+	 * only one should be selected at a time
+	 */
 	public void deselectChoiceButtons(){
 		for(Button b :mChoiceButtonArray) {
 			b.setSelected(false);
 		}
 	}
 
+	/**
+	 * Set all score choice buttons to enabled or not enabled and change
+	 * the button text color accordingly
+	 * @param activate, boolean true to enable or false to not enable
+	 */
 	public void choiceButtonsActivated(boolean activate){
 		for(Button b :mChoiceButtonArray){
 			if(activate && !mGame.choiceButtonIsUsed(b)){
@@ -287,14 +349,18 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public void changeChoiceButton(int i, boolean activate){
+	/**
+	 * Set if a score choice button is selected
+	 * @param i, the index of the button to be set in the mChoiceButtonArray
+	 * @param bool, true = selected, false = not selected
+	 */
+	public void setChoiceButtonSelected(int i, boolean bool){
 		if(i < 0 || i > 9) {
 			System.out.println("Index out of bounds for mChoiceButtonArray");
 			return;
 		}
-//		mChoiceButtonArray[i].setEnabled(activate);
-		mChoiceButtonArray[i].setSelected(activate);
-		if(!activate) {
+		mChoiceButtonArray[i].setSelected(bool);
+		if(!bool) {
 			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.black_text));
 		}else{
 			mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.colorAccent));
@@ -302,7 +368,4 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public Game getGame(){
-		return mGame;
-	}
 }

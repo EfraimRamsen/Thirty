@@ -2,6 +2,9 @@ package com.efraim.model;
 
 import com.efraim.activity.R;
 
+/**
+ * The class for creating Dice objects
+ */
 public class Dice {
 
 	private int mImageResId;
@@ -22,12 +25,13 @@ public class Dice {
 	 * Sets the correct image for a dice depending on its' score (1-6)
 	 * and state (DICE_STANDARD, DICE_LOCKED, DICE_OFF).
 	 *
-	 * @param diceScore
-	 * @param diceState
-	 * @return imageResId to have a reference for the dice image to use.
+	 * @param diceScore, int value that is the score of the dice being set (1-6).
+	 * @param diceState, int value that is the state of the dice being set.
+	 *                   (0 = DICE_OFF, 1 = DICE_STANDARD, 2 = DICE_LOCKED)
+	 * @return imageResId, int, to have a unique numeric reference for the dice image to use.
 	 */
 	public int setDiceImage(int diceScore, int diceState){
-		int imageResId = R.mipmap.thirty_launcher; // if this is visible something is very wrong :)
+		int imageResId = 0;
 
 		switch (diceScore){
 			case 1:{
@@ -106,22 +110,42 @@ public class Dice {
 		return imageResId;
 	}
 
+	/**
+	 * Get the score of a dice.
+	 * @return int mDiceScore, (should be 1-6)
+	 */
 	public int getDiceScore() {
 		return mDiceScore;
 	}
 
+	/**
+	 * Sets the score for a dice.
+	 * @param diceScore, int (should be 1-6)
+	 */
 	public void setDiceScore(int diceScore) {
 		mDiceScore = diceScore;
 	}
 
+	/**
+	 * @return int mDiceState, (0 = DICE_OFF, 1 = DICE_STANDARD, 2 = DICE_LOCKED)
+	 */
 	public int getDiceState() {
 		return mDiceState;
 	}
 
+	/**
+	 * Sets the state of a dice.
+	 * @param diceState, int (0 = DICE_OFF, 1 = DICE_STANDARD, 2 = DICE_LOCKED)
+	 */
 	public void setDiceState(int diceState) {
 		mDiceState = diceState;
 	}
 
+	/**
+	 * TEST
+	 * Used for printouts in the console when testing
+	 * @return String message, with a dice score number
+	 */
 	@Override
 	public String toString(){
 		String message = ""+this.getDiceScore();
