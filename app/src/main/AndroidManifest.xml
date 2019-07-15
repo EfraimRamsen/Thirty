@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/thirty_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.efraim.activity.MainActivity">
+
+        <activity android:name="com.efraim.activity.MainActivity"
+            android:screenOrientation="userPortrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScoreActivity" />
+        <activity android:name=".ScoreActivity" android:screenOrientation="userPortrait"/>
     </application>
 
 </manifest>

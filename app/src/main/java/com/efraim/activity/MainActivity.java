@@ -3,6 +3,7 @@ package com.efraim.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,6 +19,16 @@ import com.efraim.model.*;
  * @author Efraim Ramsén
  */
 public class MainActivity extends AppCompatActivity {
+
+	private static final String KEY_INSTRUCTIONS = "instructions";
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState){
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putCharSequence(KEY_INSTRUCTIONS, mInstructionsTextView.getText());
+		//Todo spara från Game
+		//Todo spara från MainActivity
+	}
 
 	private Game mGame;
 	private TextView mInstructionsTextView;
@@ -40,13 +51,20 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//todo läs in alla sparade värden från savedinstancestate
 		setContentView(R.layout.activity_main);
+
 
 		mGame = new Game();
 
 		mInstructionsTextView = findViewById(R.id.instructions);
+		System.out.println("TESTAR    "+mInstructionsTextView.getText());
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
 		mRoundTextView = findViewById(R.id.round_value);
+
+		if(savedInstanceState != null){
+			mInstructionsTextView.setText(savedInstanceState.getString(KEY_INSTRUCTIONS, ""));
+		}
 
 		createDiceButtons();
 		createRollButton();
