@@ -1,11 +1,14 @@
 package com.efraim.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.efraim.activity.R;
 
 /**
  * The class for creating Dice objects
  */
-public class Dice {
+public class Dice implements Parcelable {
 
 	private int mImageResId;
 	private int mDiceScore;
@@ -20,6 +23,25 @@ public class Dice {
 		mDiceScore = diceScore;
 		mDiceState = diceState;
 	}
+
+
+	protected Dice(Parcel in) {
+		mImageResId = in.readInt();
+		mDiceScore = in.readInt();
+		mDiceState = in.readInt();
+	}
+
+	public static final Creator<Dice> CREATOR = new Creator<Dice>() {
+		@Override
+		public Dice createFromParcel(Parcel in) {
+			return new Dice(in);
+		}
+
+		@Override
+		public Dice[] newArray(int size) {
+			return new Dice[size];
+		}
+	};
 
 	/**
 	 * Sets the correct image for a dice depending on its' score (1-6)
@@ -150,5 +172,17 @@ public class Dice {
 	public String toString(){
 		String message = ""+this.getDiceScore();
 		return message;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(mImageResId);
+		dest.writeInt(mDiceScore);
+		dest.writeInt(mDiceState);
 	}
 }

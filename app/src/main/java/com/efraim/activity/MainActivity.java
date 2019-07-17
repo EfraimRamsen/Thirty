@@ -20,14 +20,24 @@ import com.efraim.model.*;
  */
 public class MainActivity extends AppCompatActivity {
 
-	private static final String KEY_INSTRUCTIONS = "instructions";
+	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
+	private static final String KEY_GAME_THROW = "throw";
+	private static final String KEY_GAME_ROUND = "round";
+	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
+	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST_ = "usedchoice";
+	//Todo behövs för gameOver?
+	private static final String KEY_SCORE_DICEFOREACHROUNDLIST = "diceforeachround";
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putCharSequence(KEY_INSTRUCTIONS, mInstructionsTextView.getText());
+		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
 		//Todo spara från Game
-		//Todo spara från MainActivity
+		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
+		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
+		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
+		savedInstanceState.putParcelableArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST_,mGame.getUsedChoiceButtons());
+		//Todo spara från score
 	}
 
 	private Game mGame;
@@ -63,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
 		mRoundTextView = findViewById(R.id.round_value);
 
 		if(savedInstanceState != null){
-			mInstructionsTextView.setText(savedInstanceState.getString(KEY_INSTRUCTIONS, ""));
+			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS, ""));
+
 		}
 
 		createDiceButtons();
