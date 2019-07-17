@@ -3,7 +3,6 @@ package com.efraim.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final String KEY_GAME_THROW = "throw";
 	private static final String KEY_GAME_ROUND = "round";
 	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
-	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST_ = "usedchoice";
+	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
 	//Todo behövs för gameOver?
 	private static final String KEY_SCORE_DICEFOREACHROUNDLIST = "diceforeachround";
 
@@ -32,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
 	public void onSaveInstanceState(Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
-		//Todo spara från Game
 		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
 		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
 		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
-		savedInstanceState.putParcelableArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST_,mGame.getUsedChoiceButtons());
+		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
 		//Todo spara från score
 	}
 
@@ -56,24 +54,30 @@ public class MainActivity extends AppCompatActivity {
 	/**
 	 * Starts a new instance of Game when created and sets the listener for
 	 * the buttons and the first text instructions.
-	 * @param savedInstanceState //TODO, this is not customized yet and state is not saved on rotate/restart
+	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//todo läs in alla sparade värden från savedinstancestate
 		setContentView(R.layout.activity_main);
 
 
 		mGame = new Game();
 
 		mInstructionsTextView = findViewById(R.id.instructions);
-		System.out.println("TESTAR    "+mInstructionsTextView.getText());
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
 		mRoundTextView = findViewById(R.id.round_value);
 
+		//todo läs in alla sparade värden från savedinstancestate
 		if(savedInstanceState != null){
-			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS, ""));
+			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS));
+			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));
+			mGame.setRound(savedInstanceState.getInt(KEY_GAME_ROUND));
+			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST));
+			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST));
+
+			updateDiceThrowText();
+			updateRoundText();
 
 		}
 
@@ -175,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
 				else if(mGame.allDiceLockedState()){
 					for(Button b : mChoiceButtonArray){
 						if(b.isSelected()){
-							mGame.getUsedChoiceButtons().add(b);
+							int i = b.getId();
+							mGame.getUsedChoiceButtonIDs().add(i);//ändrar från b till b.getId()
 						}
 					}
 					mGame.finishRound();

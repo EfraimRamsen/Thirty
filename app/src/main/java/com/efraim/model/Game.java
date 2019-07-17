@@ -10,7 +10,7 @@ import java.util.Random;
  * what round (1-10) and dice throw (0-3) it currently is and also creates
  * a new instance of the Score class when created.
  * 'latestScoreDiceList' contains the dice used in the latest calculated score.
- * 'usedChoiceButtons' contains the choices that are used to check that each
+ * 'usedChoiceButtonIDs' contains the choices that are used to check that each
  * button only can be used once in a game.
  * 'gameOver' will be set to true after round 10.
  *
@@ -23,7 +23,7 @@ public class Game {
 	private int mDiceThrow;
 	private Score score;
 	private ArrayList<Dice> latestScoreDiceList;
-	private ArrayList<Button> usedChoiceButtons = new ArrayList<>();
+	private ArrayList<Integer> usedChoiceButtonIDs = new ArrayList<>();
 	private boolean gameOver = false;
 
 	private static final int DICE_OFF = 0;
@@ -69,10 +69,10 @@ public class Game {
 	 * @return boolean true if button is used, false if it's not used
 	 */
 	public boolean choiceButtonIsUsed(Button choiceButton){
-		if(usedChoiceButtons == null)
+		if(usedChoiceButtonIDs == null)
 			return false;
-		for(Button b : usedChoiceButtons){
-			if(b == choiceButton)
+		for(Integer i : usedChoiceButtonIDs){
+			if(i == choiceButton.getId())
 				return true;
 		}
 		return false;
@@ -81,8 +81,8 @@ public class Game {
 	/**
 	 * @return ArrayList with all the choice buttons that have been used already
 	 */
-	public ArrayList<Button> getUsedChoiceButtons() {
-		return usedChoiceButtons;
+	public ArrayList<Integer> getUsedChoiceButtonIDs() {
+		return usedChoiceButtonIDs;
 	}
 
 	/**
@@ -202,6 +202,14 @@ public class Game {
 		return latestScoreDiceList;
 	}
 
+	public void setLatestScoreDiceList(ArrayList<Dice> latestScoreDiceList) {
+		this.latestScoreDiceList = latestScoreDiceList;
+	}
+
+	public void setUsedChoiceButtonIDs(ArrayList<Integer> usedChoiceButtonIDs) {
+		this.usedChoiceButtonIDs = usedChoiceButtonIDs;
+	}
+
 	/**
 	 * Calculates the total dice score for a list of dice
 	 * @param diceList, the ArrayList of dice that should be calculated
@@ -221,6 +229,14 @@ public class Game {
 	 */
 	public int getDiceThrow() {
 		return mDiceThrow;
+	}
+
+	public void setRound(int mRound) {
+		this.mRound = mRound;
+	}
+
+	public void setDiceThrow(int mDiceThrow) {
+		this.mDiceThrow = mDiceThrow;
 	}
 
 	/**
