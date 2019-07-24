@@ -12,16 +12,19 @@ import com.efraim.model.Score;
  */
 public class ScoreActivity extends AppCompatActivity {
 
-	private TextView scoreForAllRounds;
-	private TextView totalScoreValue;
-	private Score score;
+	private TextView mScoreForAllRounds;
+	private TextView mTotalScoreValue;
+	private Score mScore;
+
 
 	@Override
-	protected void onCreate(Bundle savedInstranceState) {
-		super.onCreate(savedInstranceState);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_score);
 
-		//TODO importera Game.getScore()
+		mTotalScoreValue = findViewById(R.id.total_score_value);
+		mTotalScoreValue.setText(this.getIntent().getStringExtra("totalscore"));
+		//TODO importera Game.getScore() via intent?
 		//TODO display used dice and score button for each round
 		//TODO display total score
 

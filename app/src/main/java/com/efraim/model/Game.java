@@ -2,6 +2,7 @@ package com.efraim.model;
 
 import android.widget.Button;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -46,6 +47,16 @@ public class Game {
 		mDiceThrow = 0;
 		mRound = 1;
 		score = new Score();
+	}
+
+	public ArrayList<String> getUsedChoiceButtonNames(){
+		ArrayList<String> usedChoiceButtonNames = new ArrayList<>();
+		for(Integer i : usedChoiceButtonIDs){
+			Button b = new Button();//TODO
+
+		}
+
+		return usedChoiceButtonNames;
 	}
 
 	/**
@@ -273,6 +284,11 @@ public class Game {
 	public int getRound() {
 		return mRound;
 	}
+
+	public Score getScore() {
+		return score;
+	}
+
 }
 
 

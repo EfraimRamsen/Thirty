@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
+import java.util.ArrayList;
+
 /**
  * This class handles the buttons and textviews visible on activity_main.xml
  * and starts a new instance of the class Game when created.
@@ -24,18 +26,22 @@ public class MainActivity extends AppCompatActivity {
 	private static final String KEY_GAME_ROUND = "round";
 	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
 	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
-	//Todo behövs för gameOver?
-	private static final String KEY_SCORE_DICEFOREACHROUNDLIST = "diceforeachround";
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);
+
 		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
 		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
 		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
 		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
 		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
-		//Todo spara från score
+
+		int roundNumber = 1;
+		for(ArrayList<Dice> a : mGame.getScore().getDiceForEachRound()){
+				savedInstanceState.putParcelableArrayList("diceforeachround"+roundNumber,a);
+				roundNumber++;
+		}
 	}
 
 	private Game mGame;
@@ -79,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
 			updateDiceThrowText();
 			updateRoundText();
 
+			for(int i = 1; i < 11; i++){
+				if(savedInstanceState.<Dice>getParcelableArrayList("diceforeachround"+i) != null){
+					mGame.getScore().addDiceList(savedInstanceState.<Dice>getParcelableArrayList("diceforeachround"+i));
+				}
+			}
+
 		}
 
 		createDiceButtons();
@@ -92,6 +104,18 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	public void startScoreActivity(){
 		Intent intent = new Intent(this,ScoreActivity.class);
+//		intent.putExtra("round1",mGame.getScore().getDiceForEachRound().get(0));
+//		intent.putExtra("round2",mGame.getScore().getDiceForEachRound().get(1));
+//		intent.putExtra("round3",mGame.getScore().getDiceForEachRound().get(2));
+//		intent.putExtra("round4",mGame.getScore().getDiceForEachRound().get(3));
+//		intent.putExtra("round5",mGame.getScore().getDiceForEachRound().get(4));
+//		intent.putExtra("round6",mGame.getScore().getDiceForEachRound().get(5));
+//		intent.putExtra("round7",mGame.getScore().getDiceForEachRound().get(6));
+//		intent.putExtra("round8",mGame.getScore().getDiceForEachRound().get(7));
+//		intent.putExtra("round9",mGame.getScore().getDiceForEachRound().get(8));
+//		intent.putExtra("round10",mGame.getScore().getDiceForEachRound().get(9));
+
+
 
 		startActivity(intent);
 	}

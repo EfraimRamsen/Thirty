@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Score {
 	private int mTotalScore = 0;
 	private ArrayList<ArrayList<Dice>> mDiceForEachRound = new ArrayList<>();
+	private ArrayList<Integer> mScoreForEachRound = new ArrayList<>();
 
 	/**
 	 * Adds a list with dice to the list mDiceForEachRound and updates the
@@ -27,5 +28,13 @@ public class Score {
 				mTotalScore += d.getDiceScore();
 			}
 		}
+	}
+
+	public ArrayList<ArrayList<Dice>> getDiceForEachRound() {
+		return mDiceForEachRound;
+	}
+
+	public ArrayList<Integer> getScoreForEachRound(){//TODO
+		return mScoreForEachRound;
 	}
 }
