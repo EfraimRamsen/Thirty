@@ -104,18 +104,8 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	public void startScoreActivity(){
 		Intent intent = new Intent(this,ScoreActivity.class);
-//		intent.putExtra("round1",mGame.getScore().getDiceForEachRound().get(0));
-//		intent.putExtra("round2",mGame.getScore().getDiceForEachRound().get(1));
-//		intent.putExtra("round3",mGame.getScore().getDiceForEachRound().get(2));
-//		intent.putExtra("round4",mGame.getScore().getDiceForEachRound().get(3));
-//		intent.putExtra("round5",mGame.getScore().getDiceForEachRound().get(4));
-//		intent.putExtra("round6",mGame.getScore().getDiceForEachRound().get(5));
-//		intent.putExtra("round7",mGame.getScore().getDiceForEachRound().get(6));
-//		intent.putExtra("round8",mGame.getScore().getDiceForEachRound().get(7));
-//		intent.putExtra("round9",mGame.getScore().getDiceForEachRound().get(8));
-//		intent.putExtra("round10",mGame.getScore().getDiceForEachRound().get(9));
-
-
+		intent.putExtra("scorebuttonnames",getUsedChoiceButtonNames());
+		intent.putExtra("scoreforround",mGame.getScore().getScoreForEachRound());
 
 		startActivity(intent);
 	}
@@ -426,4 +416,19 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	public Button[] getChoiceButtonArray() {
+		return mChoiceButtonArray;
+	}
+
+	public ArrayList<String> getUsedChoiceButtonNames(){
+		ArrayList<String> usedChoiceButtonNames = new ArrayList<>();
+		for(Integer i : mGame.getUsedChoiceButtonIDs()){
+			for(Button b : mChoiceButtonArray)
+				if(i == b.getId()){
+					usedChoiceButtonNames.add((String)b.getText());
+				}
+		}
+
+		return usedChoiceButtonNames;
+	}
 }

@@ -21,12 +21,20 @@ public class Score {
 	public void addDiceList(ArrayList<Dice> diceList){
 		mDiceForEachRound.add(diceList);
 		mTotalScore = 0;
+		mScoreForEachRound.clear();
+
 		for (ArrayList<Dice> list : mDiceForEachRound){
-			if(list == null)
+			if(list == null){
+				mScoreForEachRound.add(0);
 				continue;
+			}
+			int i = 0;
 			for(Dice d : list){
+				//TODO lägg till i listan en summa för varje runda
+				i += d.getDiceScore();
 				mTotalScore += d.getDiceScore();
 			}
+			mScoreForEachRound.add(i);
 		}
 	}
 
