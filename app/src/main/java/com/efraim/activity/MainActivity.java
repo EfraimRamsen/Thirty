@@ -415,10 +415,11 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public Button[] getChoiceButtonArray() {
-		return mChoiceButtonArray;
-	}
-
+	/**
+	 * This method is used to save the name of the Choice Button used for each round so it can be
+	 * displayed in the Score activity after the game is over.
+	 * @return usedChoiceButtonNames, an ArrayList of Strings ("LOW","4","5" etc)
+	 */
 	public ArrayList<String> getUsedChoiceButtonNames(){
 		ArrayList<String> usedChoiceButtonNames = new ArrayList<>();
 		for(Integer i : mGame.getUsedChoiceButtonIDs()){
