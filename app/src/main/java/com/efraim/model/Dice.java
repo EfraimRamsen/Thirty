@@ -18,6 +18,13 @@ public class Dice implements Parcelable {
 	private static final int DICE_STANDARD = 1;
 	private static final int DICE_LOCKED = 2;
 
+	/**
+	 * The constructor of the Dice class.
+	 * @param diceScore, the score of the dice being created (1-6).
+	 * @param diceState, the state of the dice being created (DICE_OFF = 0
+	 * DICE_STANDARD = 1
+	 * DICE_LOCKED = 2)
+	 */
 	public Dice(int diceScore, int diceState){
 		mImageResId = setDiceImage(diceScore, diceState);
 		mDiceScore = diceScore;
@@ -31,6 +38,9 @@ public class Dice implements Parcelable {
 		mDiceState = in.readInt();
 	}
 
+	/**
+	 * Required for implementing Parceable. This is so a new Dice can be created from a Parcel.
+	 */
 	public static final Creator<Dice> CREATOR = new Creator<Dice>() {
 		@Override
 		public Dice createFromParcel(Parcel in) {
@@ -174,11 +184,21 @@ public class Dice implements Parcelable {
 		return message;
 	}
 
+	/**
+	 * Required for implementing Parceable, not used.
+	 * @return
+	 */
 	@Override
 	public int describeContents() {
 		return 0;
 	}
 
+	/**
+	 * Used to write the Dice class to a parcel for use when saving the state on e.g. rotation.
+	 * Required for implementing Parceable.
+	 * @param dest
+	 * @param flags
+	 */
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(mImageResId);
