@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
 		mRoundTextView = findViewById(R.id.round_value);
 
-		//todo läs in alla sparade värden från savedinstancestate
 		if(savedInstanceState != null){
 			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS));
 			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));

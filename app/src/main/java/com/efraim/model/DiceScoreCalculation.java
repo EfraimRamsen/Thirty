@@ -106,7 +106,9 @@ public class DiceScoreCalculation {
 			for(Dice b : notUsedDice){
 				if(usedDice.contains(b))
 					continue;
-				if(a != b && a.getDiceScore() + b.getDiceScore() == mButtonScoreChoice){
+				if(a != b &&
+						(a.getDiceScore() + b.getDiceScore() == mButtonScoreChoice) &&
+						!usedDice.contains(a) && !usedDice.contains(b)){
 					usedDice.add(a);
 					usedDice.add(b);
 					System.out.println("TWO: Adding to usedDice: a:"+a+" b:"+b);//test
