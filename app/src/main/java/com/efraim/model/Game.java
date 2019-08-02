@@ -86,19 +86,19 @@ public class Game {
 		return usedChoiceButtonIDs;
 	}
 
-	/**
-	 * TEST
-	 * Used in rollAllDice() instead of rollADice() to set each dice
-	 * manually instead of randomly.
-	 *
-	 */
+//	/**
+//	 * TEST
+//	 * Used in rollAllDice() instead of rollADice() to set each dice
+//	 * manually instead of randomly.
+//	 *
+//	 */
 //	private Dice[] DICETESTARRAY = new Dice[]{
-//			new Dice(1,1),
-//			new Dice(1,1),
-//			new Dice(5,1),
 //			new Dice(6,1),
-//			new Dice(1,1),
-//			new Dice(1,1),
+//			new Dice(5,1),
+//			new Dice(3,1),
+//			new Dice(4,1),
+//			new Dice(3,1),
+//			new Dice(3,1),
 //	};
 
 	/**
@@ -108,7 +108,7 @@ public class Game {
 	public void rollAllDice(){
 		for (int i = 0; i < mDiceArray.length; i++){
 			if(mDiceArray[i].getDiceState() != DICE_LOCKED) {
-				mDiceArray[i] = rollADice(mDiceArray[i]);
+				mDiceArray[i] = rollADice(mDiceArray[i]); //Comment this line when using line below
 //				mDiceArray[i] = DICETESTARRAY[i]; //TEST CODE
 			}
 		}

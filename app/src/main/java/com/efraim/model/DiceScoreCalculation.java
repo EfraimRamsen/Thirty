@@ -87,19 +87,6 @@ public class DiceScoreCalculation {
 			return usedDice;
 
 		//score with two
-		//TODO buggfix, den lägger till dubletter
-		/*
-		 * I/System.out: TWO: Adding to usedDice: a:6 b:3
-		 * I/chatty: uid=10286(com.efraim.activity) identical 1 line
-		 * I/System.out: TWO: Adding to usedDice: a:6 b:3
-		 * I/System.out: TWO: Adding to usedDice: a:5 b:4
-		 *     mRolledDiceArray: [ 6 5 3 4 3 3 ]
-		 *     mUsedDiceList: [6, 3, 6, 3, 6, 3, 5, 4]
-		 *     mButtonScoreChoice: 9
-		 *     mSumOfAllRolledDice: 24
-		 *
-		 * Den lägger till a+c, a+d, a+e.. använder a flera gånger.
-		 */
 		for(Dice a : notUsedDice){
 			if(usedDice.contains(a))
 				continue;
