@@ -30,7 +30,6 @@ public class Score {
 			}
 			int i = 0;
 			for(Dice d : list){
-				//TODO lägg till i listan en summa för varje runda
 				i += d.getDiceScore();
 				mTotalScore += d.getDiceScore();
 			}
@@ -38,10 +37,16 @@ public class Score {
 		}
 	}
 
+	/**
+	 * @return mDiceForEachRound, an ArrayList of ArrayLists for each round with all the Dice that was used
+	 */
 	public ArrayList<ArrayList<Dice>> getDiceForEachRound() {
 		return mDiceForEachRound;
 	}
 
+	/**
+	 * @return mScoreForEachRound, an ArrayList of Integers with the scored points for each round
+	 */
 	public ArrayList<Integer> getScoreForEachRound(){//TODO
 		return mScoreForEachRound;
 	}
