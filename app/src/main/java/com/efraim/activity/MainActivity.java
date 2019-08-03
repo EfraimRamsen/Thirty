@@ -21,31 +21,6 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
 
-	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
-	private static final String KEY_MAIN_ROLL_BUTTON_STATE = "rollbuttonstate";
-	private static final String KEY_GAME_THROW = "throw";
-	private static final String KEY_GAME_ROUND = "round";
-	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
-	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
-
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState){
-		super.onSaveInstanceState(savedInstanceState);
-
-		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
-		savedInstanceState.putBoolean(KEY_MAIN_ROLL_BUTTON_STATE,mRollButton.isEnabled());
-		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
-		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
-		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
-		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
-
-		int roundNumber = 1;
-		for(ArrayList<Dice> a : mGame.getScore().getDiceForEachRound()){
-				savedInstanceState.putParcelableArrayList("diceforeachround"+roundNumber,a);
-				roundNumber++;
-		}
-	}
-
 	private Game mGame;
 	private TextView mInstructionsTextView;
 	private ImageButton[] mDiceButtonArray;
@@ -58,6 +33,35 @@ public class MainActivity extends AppCompatActivity {
 	private static final int DICE_OFF = 0;
 	private static final int DICE_STANDARD = 1;
 	private static final int DICE_LOCKED = 2;
+
+	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
+	private static final String KEY_MAIN_ROLL_BUTTON_STATE = "rollbuttonstate";
+	private static final String KEY_MAIN_CONFIRM_BUTTON_STATE = "confirmbuttonstate";
+	private static final String KEY_GAME_THROW = "throw";
+	private static final String KEY_GAME_ROUND = "round";
+	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
+	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
+	private static final String KEY_GAME_DICE_ARRAY = "dicearray";
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState){
+		super.onSaveInstanceState(savedInstanceState);
+
+		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
+		savedInstanceState.putBoolean(KEY_MAIN_ROLL_BUTTON_STATE,mRollButton.isEnabled());
+		savedInstanceState.putBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE,mConfirmButton.isEnabled());
+		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
+		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
+		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
+		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
+		savedInstanceState.putParcelableArray(KEY_GAME_DICE_ARRAY,mGame.getDiceArray());
+
+		int roundNumber = 1;
+		for(ArrayList<Dice> a : mGame.getScore().getDiceForEachRound()){
+				savedInstanceState.putParcelableArrayList("diceforeachround"+roundNumber,a);
+				roundNumber++;
+		}
+	}
 
 	/**
 	 * Starts a new instance of Game when created and sets the listener for
@@ -75,9 +79,10 @@ public class MainActivity extends AppCompatActivity {
 		mInstructionsTextView = findViewById(R.id.instructions);
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
 		mRoundTextView = findViewById(R.id.round_value);
+		mRollButton = findViewById(R.id.roll_button);
 
 		createDiceButtons();
-		createRollButton();
+
 		createConfirmButton();
 		createChoiceButtons();
 
@@ -87,8 +92,12 @@ public class MainActivity extends AppCompatActivity {
 			mGame.setRound(savedInstanceState.getInt(KEY_GAME_ROUND));
 			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST));
 			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST));
+			mGame.setDiceArray((Dice[])savedInstanceState.getParcelableArray(KEY_GAME_DICE_ARRAY));
 
 			toggleButtonEnabled(mRollButton,savedInstanceState.getBoolean(KEY_MAIN_ROLL_BUTTON_STATE));
+			toggleButtonEnabled(mConfirmButton,savedInstanceState.getBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE));
+
+			updateDiceIcons();
 			updateDiceThrowText();
 			updateRoundText();
 
@@ -100,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 		}
 
+		createRollButton();
 
 	}
 
@@ -136,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
 						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
 							break;
 						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
-
+							break;
+						case DICE_LOCKED: dice.setDiceState(DICE_LOCKED);
 							break;
 					}
 					updateDiceIcons();
@@ -149,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 	 * Create the roll button and set the onClick listener.
 	 */
 	public void createRollButton(){
-		mRollButton = findViewById(R.id.roll_button);
+
 		mRollButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

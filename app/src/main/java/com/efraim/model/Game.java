@@ -1,6 +1,10 @@
 package com.efraim.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.Button;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import com.efraim.activity.*;
@@ -17,7 +21,7 @@ import com.efraim.activity.*;
  *
  * @author Efraim Ramsén
  */
-public class Game {
+public class Game implements Parcelable {
 
 	private Dice[] mDiceArray;
 	private int mRound;
@@ -49,6 +53,26 @@ public class Game {
 		score = new Score();
 	}
 
+	protected Game(Parcel in) {
+		mDiceArray = in.createTypedArray(Dice.CREATOR);
+		mRound = in.readInt();
+		mDiceThrow = in.readInt();
+		latestScoreDiceList = in.createTypedArrayList(Dice.CREATOR);
+		gameOver = in.readByte() != 0;
+	}
+
+	public static final Creator<Game> CREATOR = new Creator<Game>() {
+		@Override
+		public Game createFromParcel(Parcel in) {
+			return new Game(in);
+		}
+
+		@Override
+		public Game[] newArray(int size) {
+			return new Game[size];
+		}
+	};
+
 	/**
 	 * @return gameOver, boolean that should be false before the end of round 10
 	 */
@@ -57,10 +81,19 @@ public class Game {
 	}
 
 	/**
+	 * Get the Dice array.
 	 * @return mDiceArray, array containing the currently displayed dice
 	 */
 	public Dice[] getDiceArray() {
 		return mDiceArray;
+	}
+
+	/**
+	 * Set the Dice array.
+	 * @param mDiceArray, an array containing 6 Dice objects.
+	 */
+	public void setDiceArray(Dice[] mDiceArray) {
+		this.mDiceArray = mDiceArray;
 	}
 
 	/**
@@ -280,7 +313,19 @@ public class Game {
 	}
 
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {//TODO tänk om lite, testa att göra game till parcel
+		dest.writeTypedArray(mDiceArray, flags);
+		dest.writeInt(mRound);
+		dest.writeInt(mDiceThrow);
+		dest.writeTypedList(latestScoreDiceList);
+		dest.writeByte((byte) (gameOver ? 1 : 0));
+	}
 }
 
 
