@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
+	private static final String KEY_MAIN_ROLL_BUTTON_STATE = "rollbuttonstate";
 	private static final String KEY_GAME_THROW = "throw";
 	private static final String KEY_GAME_ROUND = "round";
 	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onSaveInstanceState(savedInstanceState);
 
 		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
+		savedInstanceState.putBoolean(KEY_MAIN_ROLL_BUTTON_STATE,mRollButton.isEnabled());
 		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
 		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
 		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
@@ -74,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
 		mRoundTextView = findViewById(R.id.round_value);
 
+		createDiceButtons();
+		createRollButton();
+		createConfirmButton();
+		createChoiceButtons();
+
 		if(savedInstanceState != null){
 			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS));
 			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST));
 			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST));
 
+			toggleButtonEnabled(mRollButton,savedInstanceState.getBoolean(KEY_MAIN_ROLL_BUTTON_STATE));
 			updateDiceThrowText();
 			updateRoundText();
 
@@ -92,10 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
 		}
 
-		createDiceButtons();
-		createRollButton();
-		createConfirmButton();
-		createChoiceButtons();
+
 	}
 
 	/**
