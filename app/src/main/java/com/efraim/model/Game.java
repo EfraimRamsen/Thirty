@@ -57,6 +57,7 @@ public class Game implements Parcelable {
 		mDiceArray = in.createTypedArray(Dice.CREATOR);
 		mRound = in.readInt();
 		mDiceThrow = in.readInt();
+		score = in.readParcelable(Score.class.getClassLoader());
 		latestScoreDiceList = in.createTypedArrayList(Dice.CREATOR);
 		gameOver = in.readByte() != 0;
 	}
@@ -319,10 +320,11 @@ public class Game implements Parcelable {
 	}
 
 	@Override
-	public void writeToParcel(Parcel dest, int flags) {//TODO tänk om lite, testa att göra game till parcel
+	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeTypedArray(mDiceArray, flags);
 		dest.writeInt(mRound);
 		dest.writeInt(mDiceThrow);
+//		dest.writeParcelable(score, flags);
 		dest.writeTypedList(latestScoreDiceList);
 		dest.writeByte((byte) (gameOver ? 1 : 0));
 	}

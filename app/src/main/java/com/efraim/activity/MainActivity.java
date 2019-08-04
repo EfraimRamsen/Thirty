@@ -37,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
 	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
 	private static final String KEY_MAIN_ROLL_BUTTON_STATE = "rollbuttonstate";
 	private static final String KEY_MAIN_CONFIRM_BUTTON_STATE = "confirmbuttonstate";
-	private static final String KEY_GAME_THROW = "throw";
-	private static final String KEY_GAME_ROUND = "round";
-	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
-	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
-	private static final String KEY_GAME_DICE_ARRAY = "dicearray";
+//	private static final String KEY_GAME_THROW = "throw";
+//	private static final String KEY_GAME_ROUND = "round";
+//	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
+//	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
+//	private static final String KEY_GAME_DICE_ARRAY = "dicearray";
+	private static final String KEY_GAME = "game";
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
@@ -50,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
 		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
 		savedInstanceState.putBoolean(KEY_MAIN_ROLL_BUTTON_STATE,mRollButton.isEnabled());
 		savedInstanceState.putBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE,mConfirmButton.isEnabled());
-		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
-		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
-		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
-		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
-		savedInstanceState.putParcelableArray(KEY_GAME_DICE_ARRAY,mGame.getDiceArray());
+//		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
+//		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
+//		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
+//		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
+//		savedInstanceState.putParcelableArray(KEY_GAME_DICE_ARRAY,mGame.getDiceArray());
+		savedInstanceState.putParcelable(KEY_GAME,mGame);
 
 		int roundNumber = 1;
 		for(ArrayList<Dice> a : mGame.getScore().getDiceForEachRound()){
@@ -73,8 +75,12 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-
-		mGame = new Game();
+		if(savedInstanceState != null){
+			mGame = savedInstanceState.getParcelable(KEY_GAME);
+		}
+		else{
+			mGame = new Game();
+		}
 
 		mInstructionsTextView = findViewById(R.id.instructions);
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
@@ -88,11 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
 		if(savedInstanceState != null){
 			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS));
-			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));
-			mGame.setRound(savedInstanceState.getInt(KEY_GAME_ROUND));
-			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST));
-			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST));
-			mGame.setDiceArray((Dice[])savedInstanceState.getParcelableArray(KEY_GAME_DICE_ARRAY));
+//			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));
+//			mGame.setRound(savedInstanceState.getInt(KEY_GAME_ROUND));
+//			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST));
+//			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST));
+//			mGame.setDiceArray((Dice[])savedInstanceState.getParcelableArray(KEY_GAME_DICE_ARRAY));
 
 			toggleButtonEnabled(mRollButton,savedInstanceState.getBoolean(KEY_MAIN_ROLL_BUTTON_STATE));
 			toggleButtonEnabled(mConfirmButton,savedInstanceState.getBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE));
