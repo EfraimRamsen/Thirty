@@ -1,15 +1,16 @@
 package com.efraim.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.efraim.model.Score;
 
 import java.util.ArrayList;
 
 /**
- * //TODO This class will display the score for each round and the total score in activity_score.xml when complete
+ * This class is used to display the total score of the completed game, and the used choice button and
+ * score for each round.
  * @author Efraim Ramsén
  */
 public class ScoreActivity extends AppCompatActivity {
@@ -18,6 +19,10 @@ public class ScoreActivity extends AppCompatActivity {
 	private TextView mTotalScoreValue;
 
 
+	/**
+	 * This method is run on the creation of the ScoreActivity and sets the textViews and score text.
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,12 +33,24 @@ public class ScoreActivity extends AppCompatActivity {
 
 		mTotalScoreValue = findViewById(R.id.total_score_value);
 		mTotalScoreValue.setText(String.valueOf(getTotalScore()));
-		//TODO importera Game.getScore() via intent?
-		//TODO display used dice and score button for each round
-		//TODO display total score
 
 	}
 
+	/**
+	 * This method creates an empty bundle to send with the intent to start a new game when you press
+	 * back from the score view.
+	 */
+	public void onBackPressed() {
+		Intent intent = new Intent(this, MainActivity.class);
+		Bundle bundle = new Bundle();
+		intent.putExtra("bundle",bundle);
+		startActivity(intent);
+	}
+
+	/**
+	 * Gets the total score from the game to display to the user.
+	 * @return totalScore, int with the combined score from all the rounds.
+	 */
 	public int getTotalScore(){
 		int totalScore = 0;
 		ArrayList<Integer> scoreForRound = this.getIntent().getIntegerArrayListExtra("scoreforround");
@@ -45,6 +62,11 @@ public class ScoreActivity extends AppCompatActivity {
 		return totalScore;
 	}
 
+	/**
+	 * This method prints a text with the used Score Choice Button and the score for each round.
+	 * @return text, a String with the text containing information about the score and used button for
+	 * each round.
+	 */
 	public String printRoundScores(){
 		String text = "";
 		ArrayList<String> choiceButtonNames = this.getIntent().getStringArrayListExtra("scorebuttonnames");

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="?attr/dialogCornerRadius"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="2dp">
+
+        <LinearLayout
+            android:layout_width="649dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="309dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="121dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5sp">
+
+                    <TextView
+                        android:id="@+id/instructions"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:baselineAligned="false"
+                        android:text="@string/welcome"
+                        android:textAlignment="center"
+                        android:textColor="@color/grey_text"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!--<Button-->
+                    <!--android:id="@+id/dice1_button"-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="100dp"-->
+                    <!--android:background="@mipmap/dice1"-->
+                    <!--/>-->
+                    <ImageButton
+                        android:id="@+id/dice1_button"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:background="@mipmap/dice1"
+
+                        />
+
+                    <ImageButton
+                        android:id="@+id/dice2_button"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:background="@mipmap/dice2" />
+
+                    <ImageButton
+                        android:id="@+id/dice3_button"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:background="@mipmap/dice3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/dice4_button"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:background="@mipmap/dice4" />
+
+                    <ImageButton
+                        android:id="@+id/dice5_button"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:background="@mipmap/dice5"
+                        android:contentDescription="TODO" />
+
+                    <ImageButton
+                        android:id="@+id/dice6_button"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:background="@mipmap/dice6"
+                        android:contentDescription="TODO" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <Button
+                        android:id="@+id/roll_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20sp"
+                        android:text="@string/roll_button"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="30sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="71dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <Button
+                        android:id="@+id/confirm_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/confirm_button"
+                        android:textColor="@color/grey_text"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <Button
+                        android:id="@+id/choiceLow_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choiceLow_button" />
+
+                    <Button
+                        android:id="@+id/choice4_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice4_button" />
+
+                    <Button
+                        android:id="@+id/choice5_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice5_button" />
+
+                    <Button
+                        android:id="@+id/choice6_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice6_button" />
+
+                    <Button
+                        android:id="@+id/choice7_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice7_button" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <Button
+                        android:id="@+id/choice8_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice8_button" />
+
+                    <Button
+                        android:id="@+id/choice9_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice9_button" />
+
+                    <Button
+                        android:id="@+id/choice10_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice10_button" />
+
+                    <Button
+                        android:id="@+id/choice11_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice11_button" />
+
+                    <Button
+                        android:id="@+id/choice12_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/choice12_button" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="39dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/diceThrow_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Sets rolled this round:"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/diceThrow_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0/3"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/roundText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Round:"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/round_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1/10"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -289,7 +289,9 @@ public class Game implements Parcelable {
 	 */
 	public void finishRound(){
 		ArrayList<Dice> roundScore = getLatestScoreDiceList();
-		score.addDiceList(roundScore);
+		System.out.println("finishRound() with roundScore ArrayList<Dice>:"+roundScore);
+		score.addToScoreForEachRound(getDiceListScore(roundScore));
+
 		if(mRound == 10){
 			gameOver = true;
 			System.out.println("Game over! :)");
@@ -324,7 +326,6 @@ public class Game implements Parcelable {
 		dest.writeTypedArray(mDiceArray, flags);
 		dest.writeInt(mRound);
 		dest.writeInt(mDiceThrow);
-//		dest.writeParcelable(score, flags);
 		dest.writeTypedList(latestScoreDiceList);
 		dest.writeByte((byte) (gameOver ? 1 : 0));
 	}

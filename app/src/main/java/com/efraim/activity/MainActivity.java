@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -37,12 +38,11 @@ public class MainActivity extends AppCompatActivity {
 	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
 	private static final String KEY_MAIN_ROLL_BUTTON_STATE = "rollbuttonstate";
 	private static final String KEY_MAIN_CONFIRM_BUTTON_STATE = "confirmbuttonstate";
-//	private static final String KEY_GAME_THROW = "throw";
-//	private static final String KEY_GAME_ROUND = "round";
-//	private static final String KEY_GAME_LATESTSCOREDICELIST = "latestscore";
-//	private static final String KEY_GAME_USEDCHOICEBUTTONSLIST = "usedchoice";
-//	private static final String KEY_GAME_DICE_ARRAY = "dicearray";
 	private static final String KEY_GAME = "game";
+	private static final String KEY_SCORE_TOTAL = "totalscore";
+	private static final String KEY_SCORE_FOR_EACH_ROUND = "scoreforeachround";
+	private static final String KEY_MAIN_CHOICE_BUTTON_SELECTED = "choicebuttonselected";
+	private static final String KEY_MAIN_CHOICE_BUTTON_ENABLED = "choicebuttonsenabled";
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
@@ -51,18 +51,21 @@ public class MainActivity extends AppCompatActivity {
 		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
 		savedInstanceState.putBoolean(KEY_MAIN_ROLL_BUTTON_STATE,mRollButton.isEnabled());
 		savedInstanceState.putBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE,mConfirmButton.isEnabled());
-//		savedInstanceState.putInt(KEY_GAME_THROW,mGame.getDiceThrow());
-//		savedInstanceState.putInt(KEY_GAME_ROUND,mGame.getRound());
-//		savedInstanceState.putParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST,mGame.getLatestScoreDiceList());
-//		savedInstanceState.putIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST,mGame.getUsedChoiceButtonIDs());
-//		savedInstanceState.putParcelableArray(KEY_GAME_DICE_ARRAY,mGame.getDiceArray());
 		savedInstanceState.putParcelable(KEY_GAME,mGame);
 
-		int roundNumber = 1;
-		for(ArrayList<Dice> a : mGame.getScore().getDiceForEachRound()){
-				savedInstanceState.putParcelableArrayList("diceforeachround"+roundNumber,a);
-				roundNumber++;
+		savedInstanceState.putInt(KEY_SCORE_TOTAL, mGame.getScore().getTotalScore());
+		savedInstanceState.putIntegerArrayList(KEY_SCORE_FOR_EACH_ROUND, mGame.getScore().getScoreForEachRound());
+
+		boolean[] choiceButtonIsSelected = new boolean[mChoiceButtonArray.length];
+		boolean[] choiceButtonIsEnabled = new boolean[mChoiceButtonArray.length];
+
+		for(int i = 0; i < mChoiceButtonArray.length; i++){
+			choiceButtonIsSelected[i] = mChoiceButtonArray[i].isSelected();
+			System.out.println(mChoiceButtonArray[i].isSelected());
+			choiceButtonIsEnabled[i] = mChoiceButtonArray[i].isEnabled();
 		}
+		savedInstanceState.putBooleanArray(KEY_MAIN_CHOICE_BUTTON_SELECTED,choiceButtonIsSelected);
+		savedInstanceState.putBooleanArray(KEY_MAIN_CHOICE_BUTTON_ENABLED,choiceButtonIsEnabled);
 	}
 
 	/**
@@ -88,17 +91,11 @@ public class MainActivity extends AppCompatActivity {
 		mRollButton = findViewById(R.id.roll_button);
 
 		createDiceButtons();
-
 		createConfirmButton();
 		createChoiceButtons();
 
 		if(savedInstanceState != null){
 			mInstructionsTextView.setText(savedInstanceState.getString(KEY_MAIN_INSTRUCTIONS));
-//			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));
-//			mGame.setRound(savedInstanceState.getInt(KEY_GAME_ROUND));
-//			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATESTSCOREDICELIST));
-//			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USEDCHOICEBUTTONSLIST));
-//			mGame.setDiceArray((Dice[])savedInstanceState.getParcelableArray(KEY_GAME_DICE_ARRAY));
 
 			toggleButtonEnabled(mRollButton,savedInstanceState.getBoolean(KEY_MAIN_ROLL_BUTTON_STATE));
 			toggleButtonEnabled(mConfirmButton,savedInstanceState.getBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE));
@@ -107,10 +104,14 @@ public class MainActivity extends AppCompatActivity {
 			updateDiceThrowText();
 			updateRoundText();
 
-			for(int i = 1; i < 11; i++){
-				if(savedInstanceState.<Dice>getParcelableArrayList("diceforeachround"+i) != null){
-					mGame.getScore().addDiceList(savedInstanceState.<Dice>getParcelableArrayList("diceforeachround"+i));
-				}
+			mGame.getScore().setTotalScore(savedInstanceState.getInt(KEY_SCORE_TOTAL));
+			mGame.getScore().setScoreForEachRound(savedInstanceState.getIntegerArrayList(KEY_SCORE_FOR_EACH_ROUND));
+
+			for(int i = 0; i < mChoiceButtonArray.length; i++){
+//				mChoiceButtonArray[i].setEnabled(savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_ENABLED)[i]);
+				toggleButtonEnabled(mChoiceButtonArray[i], savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_ENABLED)[i]);
+//				mChoiceButtonArray[i].setSelected(savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_SELECTED)[i]);
+				System.out.println("LADDAR IN "+savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_SELECTED)[i]);
 			}
 
 		}
@@ -145,6 +146,14 @@ public class MainActivity extends AppCompatActivity {
 				};
 		for(int i = 0; i < mDiceButtonArray.length; i++){
 			final Dice dice = mGame.getDiceForButton(i);
+
+			if(mGame.getDiceThrow() == 0){
+				mDiceButtonArray[i].setEnabled(false);
+			}
+			else{
+				mDiceButtonArray[i].setEnabled(true);
+			}
+
 			mDiceButtonArray[i].setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View v) {
@@ -152,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
 						case DICE_STANDARD: dice.setDiceState(DICE_OFF);
 							break;
 						case DICE_OFF: dice.setDiceState(DICE_STANDARD);
-							break;
-						case DICE_LOCKED: dice.setDiceState(DICE_LOCKED);
 							break;
 					}
 					updateDiceIcons();
@@ -228,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
 					choiceButtonsActivated(false);
 					updateDiceThrowText();
 					updateRoundText();
+					for(ImageButton b : mDiceButtonArray){
+						b.setEnabled(false);
+					}
 					updateDiceIcons();
 					mInstructionsTextView.setText(R.string.instructions_on_new_round);
 
