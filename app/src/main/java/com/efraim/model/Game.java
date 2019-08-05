@@ -1,14 +1,9 @@
 package com.efraim.model;
 
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.widget.Button;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-import com.efraim.activity.*;
 
 /**
  * An object of the Game class is created in onCreate() in MainActivity.
@@ -22,7 +17,7 @@ import com.efraim.activity.*;
  *
  * @author Efraim Ramsén
  */
-public class Game /*implements Parcelable */{
+public class Game {
 
 	private Dice[] mDiceArray;
 	private int mRound;
@@ -61,6 +56,10 @@ public class Game /*implements Parcelable */{
 		return gameOver;
 	}
 
+	/**
+	 * Set if the game is over (after round 10 is finished).
+	 * @param gameOver, boolean true or false if game is over.
+	 */
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
@@ -221,10 +220,20 @@ public class Game /*implements Parcelable */{
 		return latestScoreDiceList;
 	}
 
+	/**
+	 * Set the latest score Dice list to keep the possible score from the latest pressed
+	 * score choice button.
+	 * @param latestScoreDiceList, ArrayList with the Dice used to calculate the possible score.
+	 */
 	public void setLatestScoreDiceList(ArrayList<Dice> latestScoreDiceList) {
 		this.latestScoreDiceList = latestScoreDiceList;
 	}
 
+	/**
+	 * Set the list of used score choice buttons to keep track of the buttons that have been used
+	 * in the game.
+	 * @param usedChoiceButtonIDs
+	 */
 	public void setUsedChoiceButtonIDs(ArrayList<Integer> usedChoiceButtonIDs) {
 		this.usedChoiceButtonIDs = usedChoiceButtonIDs;
 	}
@@ -250,10 +259,18 @@ public class Game /*implements Parcelable */{
 		return mDiceThrow;
 	}
 
+	/**
+	 * Set the round of the game.
+	 * @param mRound, int - should be 1-10
+	 */
 	public void setRound(int mRound) {
 		this.mRound = mRound;
 	}
 
+	/**
+	 * Set how many dice throws (rolls) has been made in the active round.
+	 * @param mDiceThrow, int - should be 0-3
+	 */
 	public void setDiceThrow(int mDiceThrow) {
 		this.mDiceThrow = mDiceThrow;
 	}
@@ -295,6 +312,10 @@ public class Game /*implements Parcelable */{
 		return mRound;
 	}
 
+	/**
+	 * Get the active Score object
+	 * @return Score object
+	 */
 	public Score getScore() {
 		return score;
 	}

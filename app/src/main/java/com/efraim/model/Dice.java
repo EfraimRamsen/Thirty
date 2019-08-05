@@ -31,7 +31,10 @@ public class Dice implements Parcelable {
 		mDiceState = diceState;
 	}
 
-
+	/**
+	 * Constructor used to create Dice object from a Parcel from savedInstanceState.
+	 * @param in, the parcel from savedInstanceState
+	 */
 	protected Dice(Parcel in) {
 		mImageResId = in.readInt();
 		mDiceScore = in.readInt();
