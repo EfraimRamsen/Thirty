@@ -1,6 +1,7 @@
 package com.efraim.activity;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.efraim.model.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -38,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
 	private static final String KEY_MAIN_INSTRUCTIONS = "instructions";
 	private static final String KEY_MAIN_ROLL_BUTTON_STATE = "rollbuttonstate";
 	private static final String KEY_MAIN_CONFIRM_BUTTON_STATE = "confirmbuttonstate";
-	private static final String KEY_GAME = "game";
 	private static final String KEY_SCORE_TOTAL = "totalscore";
 	private static final String KEY_SCORE_FOR_EACH_ROUND = "scoreforeachround";
 	private static final String KEY_MAIN_CHOICE_BUTTON_SELECTED = "choicebuttonselected";
 	private static final String KEY_MAIN_CHOICE_BUTTON_ENABLED = "choicebuttonsenabled";
+	private static final String KEY_GAME_USED_CHOICE_BUTTONS = "usedchoicebuttons";
+	private static final String KEY_GAME_DICE_ARRAY = "dicearray";
+	private static final String KEY_GAME_ROUND = "round";
+	private static final String KEY_GAME_THROW = "throw";
+	private static final String KEY_GAME_LATEST_SCORE_DICE_LIST = "latestscoredicelist";
+	private static final String KEY_GAME_GAME_OVER = "gameover";
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState){
@@ -51,10 +56,14 @@ public class MainActivity extends AppCompatActivity {
 		savedInstanceState.putCharSequence(KEY_MAIN_INSTRUCTIONS, mInstructionsTextView.getText());
 		savedInstanceState.putBoolean(KEY_MAIN_ROLL_BUTTON_STATE,mRollButton.isEnabled());
 		savedInstanceState.putBoolean(KEY_MAIN_CONFIRM_BUTTON_STATE,mConfirmButton.isEnabled());
-		savedInstanceState.putParcelable(KEY_GAME,mGame);
-
+		savedInstanceState.putParcelableArray(KEY_GAME_DICE_ARRAY, mGame.getDiceArray());//TODO kolla
+		savedInstanceState.putInt(KEY_GAME_ROUND, mGame.getRound());
+		savedInstanceState.putInt(KEY_GAME_THROW, mGame.getDiceThrow());
 		savedInstanceState.putInt(KEY_SCORE_TOTAL, mGame.getScore().getTotalScore());
 		savedInstanceState.putIntegerArrayList(KEY_SCORE_FOR_EACH_ROUND, mGame.getScore().getScoreForEachRound());
+		savedInstanceState.putParcelableArrayList(KEY_GAME_LATEST_SCORE_DICE_LIST, mGame.getLatestScoreDiceList());
+		savedInstanceState.putIntegerArrayList(KEY_GAME_USED_CHOICE_BUTTONS, mGame.getUsedChoiceButtonIDs());
+		savedInstanceState.putBoolean(KEY_GAME_GAME_OVER, mGame.getGameOver());
 
 		boolean[] choiceButtonIsSelected = new boolean[mChoiceButtonArray.length];
 		boolean[] choiceButtonIsEnabled = new boolean[mChoiceButtonArray.length];
@@ -77,13 +86,25 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		mGame = new Game();
 
 		if(savedInstanceState != null){
-			mGame = savedInstanceState.getParcelable(KEY_GAME);
+			Parcelable[] temp = savedInstanceState.getParcelableArray(KEY_GAME_DICE_ARRAY);
+			Dice[] temp2 = new Dice[6];
+			for(int i = 0; i < temp.length; i++){
+				temp2[i] = (Dice)temp[i];
+			}
+			mGame.setDiceArray(temp2);
+
+			mGame.setRound(savedInstanceState.getInt(KEY_GAME_ROUND));
+			mGame.setDiceThrow(savedInstanceState.getInt(KEY_GAME_THROW));
+			mGame.getScore().setTotalScore(savedInstanceState.getInt(KEY_SCORE_TOTAL));
+			mGame.getScore().setScoreForEachRound(savedInstanceState.getIntegerArrayList(KEY_SCORE_FOR_EACH_ROUND));
+			mGame.setLatestScoreDiceList(savedInstanceState.<Dice>getParcelableArrayList(KEY_GAME_LATEST_SCORE_DICE_LIST));
+			mGame.setUsedChoiceButtonIDs(savedInstanceState.getIntegerArrayList(KEY_GAME_USED_CHOICE_BUTTONS));
+			mGame.setGameOver(savedInstanceState.getBoolean(KEY_GAME_GAME_OVER));
 		}
-		else{
-			mGame = new Game();
-		}
+
 
 		mInstructionsTextView = findViewById(R.id.instructions);
 		mDiceThrowTextView = findViewById(R.id.diceThrow_value);
@@ -104,14 +125,17 @@ public class MainActivity extends AppCompatActivity {
 			updateDiceThrowText();
 			updateRoundText();
 
-			mGame.getScore().setTotalScore(savedInstanceState.getInt(KEY_SCORE_TOTAL));
-			mGame.getScore().setScoreForEachRound(savedInstanceState.getIntegerArrayList(KEY_SCORE_FOR_EACH_ROUND));
 
 			for(int i = 0; i < mChoiceButtonArray.length; i++){
-//				mChoiceButtonArray[i].setEnabled(savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_ENABLED)[i]);
-				toggleButtonEnabled(mChoiceButtonArray[i], savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_ENABLED)[i]);
-//				mChoiceButtonArray[i].setSelected(savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_SELECTED)[i]);
-				System.out.println("LADDAR IN "+savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_SELECTED)[i]);
+				mChoiceButtonArray[i].setEnabled(savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_ENABLED)[i]);
+				mChoiceButtonArray[i].setSelected(savedInstanceState.getBooleanArray(KEY_MAIN_CHOICE_BUTTON_SELECTED)[i]);
+
+				if(mChoiceButtonArray[i].isSelected()){
+					mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.colorAccent));
+				}
+				else if(mChoiceButtonArray[i].isEnabled()){
+					mChoiceButtonArray[i].setTextColor(getResources().getColor(R.color.black_text));
+				}
 			}
 
 		}
